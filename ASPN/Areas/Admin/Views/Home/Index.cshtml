@@ -1,0 +1,25 @@
+﻿@model IQueryable<Article>
+
+@{
+    string strTitle = "Admin panel";
+    ViewBag.Title = strTitle;
+}
+
+<div class="text-center">
+    <div>
+        <h1 class="display-4">@strTitle</h1>
+        <div>    
+            @foreach(var article in Model)
+            {
+                <p>@article.Title</p>
+            } 
+        </div>
+    </div>
+
+
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <input type="submit" value="Logout" />
+        </form>
+    </div>
+</div>

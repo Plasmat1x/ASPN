@@ -14,9 +14,16 @@ namespace ASPN.Areas.Admin.Controllers
             this.dataManager = dataManager;
         }
 
-        public async Task<IActionResult> Edit(string CodeWord)
+        public async Task<IActionResult> Show(Guid id)
         {
-            return await Task.Run(() => View(dataManager.Articles.GetArticleByCodeWord(CodeWord)));
+            Article entity = id == default ? new Article() : dataManager.Articles.GetArticleById(id);
+            return await Task.Run(() => View(entity));
+        }
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            Article entity = id == default ? new Article() : dataManager.Articles.GetArticleById(id);
+            return await Task.Run(() => View(entity));
         }
 
         [HttpPost]

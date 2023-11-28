@@ -3,7 +3,7 @@
 <div>
     <h2>Login in Account</h2>
     <div>
-        <form asp-area="" asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@ViewBag.returnUrl">
+        <form asp-area="" asp-controller="Account" asp-action="Login" method="post">
             <div asp-validation-summary="All"></div>
             <div>
                 <label asp-for="Login"></label>
@@ -22,6 +22,12 @@
             </div>
             <div>
                 <input type="submit" value="Login"/>
+            </div>
+            <div>
+                <label>Dont Have Account?</label>
+                <span>
+                    <a asp-area="" asp-controller="Account" asp-action="Register" method="post">Create</a>
+                </span>
             </div>
         </form>
     </div>

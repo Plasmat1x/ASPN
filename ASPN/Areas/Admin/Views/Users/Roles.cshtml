@@ -1,0 +1,11 @@
+﻿@model IQueryable<IdentityRole>
+
+<div>
+    @foreach (var role in Model)
+    {
+        <div style="display: inline-block">
+            <p>@role.Id</p>
+            <p>@role.Name</p>
+        </div>
+    }
+</div>

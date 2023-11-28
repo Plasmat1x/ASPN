@@ -34,7 +34,6 @@ namespace ASPN.Controllers
         public async Task<IActionResult> Error()
         {
             return await Task.Run(() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }));
-            //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@model IdentityUser
+
+<div>
+    <h3>@Model.UserName</h3>
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <input type="submit" value="Logout" />
+        </form>
+    </div>
+</div>

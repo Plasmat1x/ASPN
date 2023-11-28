@@ -1,0 +1,12 @@
+﻿@model IQueryable<IdentityUser>
+
+<div>
+    @foreach(var user in Model){
+        <div style="display: inline-block;" class="mb-5">
+            <p>@user.Id</p>
+            <p>@user.UserName</p>
+            <p>@user.Email</p>
+            <p>@user.PasswordHash</p>
+        </div>
+    }
+</div>

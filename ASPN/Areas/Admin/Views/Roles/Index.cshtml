@@ -1,11 +1,23 @@
 ﻿@model IQueryable<IdentityRole>
 
-<div>
-    @foreach (var role in Model)
-    {
-        <div style="display: inline-block;" class="mb-5">
-            <p>@role.Id</p>
-            <p>@role.Name</p>
-        </div>
-    }
+<div class="text-center">
+    <div>
+        <h1 class="display-4">Roles</h1>
+    </div>
+    <div>
+        <a asp-area="Admin" asp-controller="Roles" asp-action="Register" asp-route-id="">Register new role</a>
+    </div>
+    <div>
+        @foreach (var role in Model)
+        {
+            <div>
+                <a asp-area="Admin" asp-controller="Roles" asp-action="Show" method="post" asp-route-id="@role.Id">@role.Name</a>
+                <form style="display: inline-block;" id="form-@role.Id" asp-area="Admin" asp-controller="Roles" asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@role.Id" />
+                    <a href="#" onclick="document.getElementById('form-@role.Id').submit();">Delete</a>
+                </form>
+            </div>
+        }
+    </div>
+
 </div>

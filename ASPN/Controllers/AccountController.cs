@@ -102,6 +102,8 @@ namespace ASPN.Controllers
 
                 var Result = await userManager.CreateAsync(user, model.Password);
 
+                userManager.AddToRoleAsync(user, "User");
+
                 if (Result.Succeeded)
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);

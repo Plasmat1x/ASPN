@@ -1,0 +1,36 @@
+﻿@model IdentityUser
+
+@{
+    string Title = "Edit User";
+    ViewBag.Title = Title;
+}
+
+<div class="card-body">
+    <h2>@Title</h2>
+    <div>
+        <form asp-area="Admin" asp-controller="Users" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="All"></div>
+
+            <div>
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" />
+                <span asp-validation-for="UserName"></span>
+            </div>
+
+            <div>
+                <label asp-for="Email"></label>
+                <input asp-for="Email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+
+            <div>
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber"></span>
+            </div>
+
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+</div>

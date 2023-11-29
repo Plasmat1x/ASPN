@@ -43,9 +43,5 @@ namespace ASPN.Domain.Repositories.EF
             context.Articles.Remove(new Article() { Id = id });
             context.SaveChanges();
         }
-
-
-
-
     }
 }

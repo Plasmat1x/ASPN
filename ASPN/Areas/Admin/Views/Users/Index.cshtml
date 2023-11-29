@@ -1,12 +1,23 @@
 ﻿@model IQueryable<IdentityUser>
 
-<div>
-    @foreach(var user in Model){
-        <div style="display: inline-block;" class="mb-5">
-            <p>@user.Id</p>
-            <p>@user.UserName</p>
-            <p>@user.Email</p>
-            <p>@user.PasswordHash</p>
-        </div>
-    }
+<div class="text-center">
+    <div>
+        <h1 class="display-4">Users</h1>
+    </div>
+    <div>
+        <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="">Add new</a>
+    </div>
+    <div>
+        @foreach (var user in Model)
+        {
+            <div>
+                <a asp-area="Admin" asp-controller="Users" asp-action="Show" method="post" asp-route-id="@user.Id">@user.UserName</a>
+                <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                <form style="display: inline-block;" id="form-@user.Id" asp-area="Admin" asp-controller="role" asp-action="Delete" method="post">
+                    <input type="hidden" name="id" value="@user.Id" />
+                    <a href="#" onclick="document.getElementById('form-@user.Id').submit();">Delete</a>
+                </form>
+            </div>
+        }
+    </div>
 </div>

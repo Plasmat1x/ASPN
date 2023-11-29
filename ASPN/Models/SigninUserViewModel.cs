@@ -2,20 +2,19 @@
 
 namespace ASPN.Models
 {
-    public class LoginViewModel
+    public class SigninUserViewModel
     {
         [Required]
-        [Display(Name = "Login")]
-        public string Login { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
-        [UIHint("password")]
+        [UIHint("Password")]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required]
-        [Display(Name = "RemberMe")]
+        [Display(Name = "Remember Me?")]
         public bool RememberMe { get; set; }
-
     }
 }

@@ -34,6 +34,7 @@ namespace ASPN.Controllers
         public async Task<IActionResult> Error(CancellationToken ct)
         {
             return await Task.Run(() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }), ct);
+
         }
     }
 }

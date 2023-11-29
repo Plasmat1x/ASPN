@@ -1,14 +1,14 @@
-﻿@model LoginViewModel
+﻿@model SigninUserViewModel
 
 <div>
-    <h2>Login in Account</h2>
+    <h2>Signin Account</h2>
     <div>
-        <form asp-area="" asp-controller="Account" asp-action="Login" method="post">
+        <form asp-area="" asp-controller="Account" asp-action="Signin" method="post">
             <div asp-validation-summary="All"></div>
             <div>
-                <label asp-for="Login"></label>
-                <input asp-for="Login"/>
-                <span asp-validation-formaction="Login"></span>
+                <label asp-for="Email"></label>
+                <input asp-for="Email"/>
+                <span asp-validation-formaction="Email"></span>
             </div>
             <div>
                 <label asp-for="Password"></label>
@@ -21,12 +21,12 @@
                 <span asp-validation-for="RememberMe"></span>
             </div>
             <div>
-                <input type="submit" value="Login"/>
+                <input type="submit" value="Signin"/>
             </div>
             <div>
                 <label>Dont Have Account?</label>
                 <span>
-                    <a asp-area="" asp-controller="Account" asp-action="Register" method="post">Create</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Signup" method="post">Create</a>
                 </span>
             </div>
         </form>

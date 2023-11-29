@@ -1,4 +1,5 @@
 ﻿using ASPN.Domain;
+using ASPN.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,23 +8,19 @@ namespace ASPN.Areas.Admin.Controllers
     [Area("Admin")]
     public class HomeController : Controller
     {
-        private readonly DataManager dataManager;
+        private readonly DataManager dataMgr;
+        private readonly UserManager<User> userMgr;
 
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-
-        public HomeController(DataManager dataManager, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public HomeController(DataManager dataMgr, UserManager<User> userMgr)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.roleManager = roleManager;
-            this.dataManager = dataManager;
+            this.userMgr = userMgr;
+            this.dataMgr = dataMgr;
         }
 
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var user = await userManager.GetUserAsync(User);
+            var user = await userMgr.GetUserAsync(User);
+
             return await Task.Run(() => View(user), ct);
         }
     }

@@ -1,4 +1,5 @@
 using ASPN.Domain;
+using ASPN.Domain.Entities.Identity;
 using ASPN.Domain.Repositories.Abstract;
 using ASPN.Domain.Repositories.EF;
 using ASPN.Services;
@@ -23,7 +24,7 @@ namespace ASPN
 
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            builder.Services.AddIdentity<User, Role>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequiredLength = 8;
@@ -39,7 +40,7 @@ namespace ASPN
             {
                 options.Cookie.Name = "pl1x_auth";
                 options.Cookie.HttpOnly = true;
-                options.LoginPath = "/account/login";
+                options.LoginPath = "/account/signin";
                 options.AccessDeniedPath = "/account/accessdenied";
                 //options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;

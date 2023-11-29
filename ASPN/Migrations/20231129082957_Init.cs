@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ASPN.Migrations
 {
     /// <inheritdoc />
@@ -34,6 +36,8 @@ namespace ASPN.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -48,6 +52,10 @@ namespace ASPN.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -175,24 +183,31 @@ namespace ASPN.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Articles",
-                columns: new[] { "Id", "Author", "CodeWord", "CreatedAt", "Description", "ImagePath", "Text", "Title" },
-                values: new object[] { new Guid("dc97bb6b-a776-4e89-a6e9-fefcae4997cc"), null, "PageIndex", new DateTime(2023, 11, 28, 16, 37, 45, 592, DateTimeKind.Utc).AddTicks(518), "Main page", null, "Main page", "Main" });
-
-            migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "7689a196-d728-4c1b-b156-9b9f95e6fd45", null, "admin", "ADMIN" });
+                columns: new[] { "Id", "ConcurrencyStamp", "Description", "Discriminator", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "087bb1c2-109b-427d-be77-e0799bf27af0", null, null, "Role", "admin", "ADMIN" },
+                    { "a061da55-fea2-4bb9-b5b9-e5d358587138", null, null, "Role", "default", "DEFAULT" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3baf4b0b-220c-4318-b54d-8528e3825530", 0, "8be83bf9-c8d4-4d2b-9559-475a2d60fc5c", "plasmat1xdev@gmail.com", true, false, null, "PLASMAT1XDEV@GMAIL.COM", "PLASMAT1X", "AQAAAAIAAYagAAAAEHjpQFIvSpdFHq19dFb6f5bylqE5uVL0+G8MKSy9c7SLrocjwiZ/6DfcCY/1R4DhZw==", null, false, "", false, "Plasmat1x" });
+                columns: new[] { "Id", "AccessFailedCount", "Birthday", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "5fe1d4fc-d6ea-43c7-a1f4-73d2f83032bd", 0, null, "a60d1ad8-bc87-4252-9bc6-4017e703a9f5", new DateTime(2023, 11, 29, 8, 29, 56, 752, DateTimeKind.Utc).AddTicks(8417), "Mike@ma.il", true, null, null, false, null, "MIKE@MA.IL", "MIKELELE", "AQAAAAIAAYagAAAAEG7W7WWGTlY4RcK0fQh8OPx6woL7h9FAyNy7nJZbhnqX5gb+txC6W0aRz/3CHncHhg==", null, false, "", false, "Mikelele" },
+                    { "b97ed420-63cd-43cd-814f-2bee8c0f46d4", 0, null, "5db4bce8-297b-4b0c-ae35-08a17eced625", new DateTime(2023, 11, 29, 8, 29, 56, 595, DateTimeKind.Utc).AddTicks(5943), "plasmat1xdev@gmail.com", true, null, null, false, null, "PLASMAT1XDEV@GMAIL.COM", "PLASMAT1X", "AQAAAAIAAYagAAAAEG6kH0zWEOngdsgK5LAu9z8+tUho660DeojppWweweQq/DeoBiIVpVAJoWHwUAM64A==", null, false, "", false, "Plasmat1x" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "7689a196-d728-4c1b-b156-9b9f95e6fd45", "3baf4b0b-220c-4318-b54d-8528e3825530" });
+                values: new object[,]
+                {
+                    { "a061da55-fea2-4bb9-b5b9-e5d358587138", "5fe1d4fc-d6ea-43c7-a1f4-73d2f83032bd" },
+                    { "087bb1c2-109b-427d-be77-e0799bf27af0", "b97ed420-63cd-43cd-814f-2bee8c0f46d4" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

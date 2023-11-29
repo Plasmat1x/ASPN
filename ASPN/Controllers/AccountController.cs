@@ -1,33 +1,35 @@
-﻿using ASPN.Models;
+﻿using ASPN.Domain.Entities.Identity;
+using ASPN.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace ASPN.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> userMgr;
+        private readonly SignInManager<User> signinMgr;
+        private readonly RoleManager<Role> roleMgr;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager)
         {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.roleManager = roleManager;
+            this.userMgr = userManager;
+            this.signinMgr = signInManager;
+            this.roleMgr = roleManager;
         }
 
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-            var user = await userManager.GetUserAsync(User);
+            var user = await userMgr.GetUserAsync(User);
 
             if (user != null)
             {
-                var userRole = await userManager.GetRolesAsync(user);
-                var allRoles = roleManager.Roles.ToList();
+                var userRole = await userMgr.GetRolesAsync(user);
 
                 bool check = (userRole.FirstOrDefault(x => x == "admin") == null ? false : true);
 
@@ -36,78 +38,43 @@ namespace ASPN.Controllers
                     return RedirectToAction("Index", "Home", new { area = "Admin" });
                 }
             }
+
             return await Task.Run(() => View(user), ct);
-        }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(CancellationToken ct)
-        {
-            var user = await userManager.GetUserAsync(User);
-
-            if (user != null)
-            {
-                return RedirectToAction("Index", "Account");
-            }
-
-            return await Task.Run(() => View(new LoginViewModel()), ct);
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model, CancellationToken ct)
-        {
-            if (ModelState.IsValid)
-            {
-                IdentityUser user = await userManager.FindByNameAsync(model.Login);
-
-                if (user != null)
-                {
-                    await signInManager.SignOutAsync();
-                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
-                    if (result.Succeeded)
-                    {
-                        return await Task.Run(() => RedirectToAction("Index", "Account"));
-                    }
-                }
-                ModelState.AddModelError(nameof(LoginViewModel.Login), "Incorrect login or/and password");
-            }
-            return await Task.Run(() => View(model), ct);
         }
 
         [Authorize]
         public async Task<IActionResult> Logout(CancellationToken ct)
         {
-            await signInManager.SignOutAsync();
+            await signinMgr.SignOutAsync();
             return await Task.Run(() => RedirectToAction("Index", "Home"));
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(CancellationToken ct)
+        public async Task<IActionResult> Signup(CancellationToken ct)
         {
             return await Task.Run(() => View(), ct);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterViewModel model, CancellationToken ct)
+        public async Task<IActionResult> Signup(SignupUserViewModel model, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = new IdentityUser
+                User user = new User
                 {
-                    UserName = model.Login,
                     Email = model.Email,
                 };
 
-                var Result = await userManager.CreateAsync(user, model.Password);
+                var Result = await userMgr.CreateAsync(user, model.Password);
 
-                userManager.AddToRoleAsync(user, "User");
+                userMgr.AddToRoleAsync(user, "default");
 
                 if (Result.Succeeded)
                 {
-                    await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Account", "Index");
+                    await signinMgr.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Account");
                 }
                 else
                 {
@@ -115,6 +82,90 @@ namespace ASPN.Controllers
                     {
                         ModelState.AddModelError(string.Empty, Err.Description);
                     }
+                }
+            }
+
+            return await Task.Run(() => View(model), ct);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Signin(CancellationToken ct)
+        {
+            var user = await userMgr.GetUserAsync(User);
+
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Account");
+            }
+
+            return await Task.Run(() => View(new SigninUserViewModel()), ct);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Signin(SigninUserViewModel model, CancellationToken ct)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await userMgr.FindByEmailAsync(model.Email);
+
+                if (user != null)
+                {
+                    await signinMgr.SignOutAsync();
+                    SignInResult result = await signinMgr.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                    if (result.Succeeded)
+                    {
+                        return await Task.Run(() => RedirectToAction("Index", "Account"));
+                    }
+                }
+                ModelState.AddModelError(nameof(SigninUserViewModel.Email), "Incorrect email or/and password");
+            }
+            return await Task.Run(() => View(model), ct);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(CancellationToken ct)
+        {
+            var user = await userMgr.GetUserAsync(User);
+
+            var model = new EditUserViewModel
+            {
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Birthday = user.Birthday.Value,
+            };
+
+            return await Task.Run(() => View(model), ct);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(EditUserViewModel model, CancellationToken ct)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userMgr.GetUserAsync(User);
+
+                user.UserName = model.UserName;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
+
+                var result = await userMgr.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Account");
+                }
+
+                foreach (var err in result.Errors)
+                {
+                    ModelState.AddModelError("", err.ToString());
                 }
             }
 

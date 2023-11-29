@@ -1,10 +1,19 @@
-﻿@using Microsoft.AspNetCore.Identity
-
-@model IdentityUser
+﻿@model User
 
 <div>
     <h3>@Model.UserName</h3>
-    <div class="div-box">
+    <div>
+        <p>@Model.UserName</p>
+        <p>@Model.FirstName</p>
+        <p>@Model.LastName</p>
+        <p>@Model.Email</p>
+        <p>@Model.PhoneNumber</p>
+        <p>@Model.Birthday</p>
+    </div>
+    <div>
+        <form asp-area="" asp-controller="Account" asp-action="Edit" method="post">
+            <input type="submit" value="Edit" />
+        </form>
         <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
             <input type="submit" value="Logout" />
         </form>

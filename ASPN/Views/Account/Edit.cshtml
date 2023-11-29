@@ -1,0 +1,43 @@
+﻿@model EditUserViewModel
+
+<div>
+    <h1>Edit User: @Model.UserName : </h1>
+
+    <form asp-area="" asp-controller="Account" asp-action="Edit" method="post">
+        <div asp-validation-summary="All"></div>
+
+        <div>
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" />
+            <span asp-validation-for="UserName"></span>
+        </div>
+
+        <div>
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+
+        <div>
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" />
+            <span asp-validation-for="LastName"></span>
+        </div>
+
+        <div>
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" />
+            <span asp-validation-for="PhoneNumber"></span>
+        </div>
+
+        <div>
+            <label asp-for="Birthday"></label>
+            <input type="date" asp-for="Birthday" />
+            <span asp-validation-for="Birthday"></span>
+        </div>
+
+        <div>
+            <input type="submit" value="Save" />
+        </div>
+    </form>
+</div>

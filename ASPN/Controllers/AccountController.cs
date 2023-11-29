@@ -19,15 +19,42 @@ namespace ASPN.Controllers
             this.roleManager = roleManager;
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> Login()
+        [Authorize]
+        public async Task<IActionResult> Index(CancellationToken ct)
         {
-            return await Task.Run(() => View(new LoginViewModel()));
+            var user = await userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                var userRole = await userManager.GetRolesAsync(user);
+                var allRoles = roleManager.Roles.ToList();
+
+                bool check = (userRole.FirstOrDefault(x => x == "admin") == null ? false : true);
+
+                if (check)
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
+            }
+            return await Task.Run(() => View(user), ct);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(CancellationToken ct)
+        {
+            var user = await userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Account");
+            }
+
+            return await Task.Run(() => View(new LoginViewModel()), ct);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
@@ -44,11 +71,11 @@ namespace ASPN.Controllers
                 }
                 ModelState.AddModelError(nameof(LoginViewModel.Login), "Incorrect login or/and password");
             }
-            return await Task.Run(() => View(model));
+            return await Task.Run(() => View(model), ct);
         }
 
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(CancellationToken ct)
         {
             await signInManager.SignOutAsync();
             return await Task.Run(() => RedirectToAction("Index", "Home"));
@@ -56,14 +83,14 @@ namespace ASPN.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register(CancellationToken ct)
         {
-            return await Task.Run(() => View());
+            return await Task.Run(() => View(), ct);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model, CancellationToken ct)
         {
             if (ModelState.IsValid)
             {
@@ -89,27 +116,7 @@ namespace ASPN.Controllers
                 }
             }
 
-            return await Task.Run(() => View(model));
-        }
-
-        [Authorize]
-        public async Task<IActionResult> Index()
-        {
-            var user = await userManager.GetUserAsync(User);
-
-            if (user != null)
-            {
-                var userRole = await userManager.GetRolesAsync(user);
-                var allRoles = roleManager.Roles.ToList();
-
-                bool check = (userRole.FirstOrDefault(x => x == "admin") == null ? false : true);
-
-                if (check)
-                {
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
-                }
-            }
-            return await Task.Run(() => View(user));
+            return await Task.Run(() => View(model), ct);
         }
     }
 }

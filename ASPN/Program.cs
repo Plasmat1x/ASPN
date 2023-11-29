@@ -9,9 +9,14 @@ namespace ASPN
 {
     public class Program
     {
+        public static AboutInfo About_info { get; set; } = new AboutInfo();
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var aboutSetcion = builder.Configuration.GetSection("About");
+            aboutSetcion.Bind(About_info);
 
             builder.Services.AddTransient<IArticleR, ArticleEFR>();
             builder.Services.AddTransient<DataManager>();

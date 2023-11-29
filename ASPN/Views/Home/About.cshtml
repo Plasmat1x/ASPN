@@ -1,10 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@{
-}
+﻿@model AboutInfo
 
 <div>
     <h1>About</h1>
+    <p>@Model.CompanyName</p>
+    <p>@Model.CompanyEmail</p>
+    <p>@Model.Developer</p>
+    <p>@Model.DeveloperEmail</p>
 </div>

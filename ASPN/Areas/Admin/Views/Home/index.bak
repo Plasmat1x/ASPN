@@ -1,0 +1,40 @@
+﻿@model IQueryable<Article>
+
+@{
+    string strTitle = "Admin panel";
+    ViewBag.Title = strTitle;
+}
+
+<div class="text-center">
+    <div>
+        <h1 class="display-4">@strTitle</h1>
+        <div> 
+            <h2>Articles</h2>
+            <div>
+                <a asp-area="Admin" asp-controller="Article" asp-action="Edit" asp-route-id="">Add new</a>
+            </div>
+            @if (Model.Any())
+            {
+                <div>
+                    @foreach (var article in Model)
+                    {
+                        <div>
+                            <a asp-area="Admin" asp-controller="Article" asp-action="Show" method="post" asp-route-id="@article.Id">@article.Title</a>
+                            <a asp-area="Admin" asp-controller="Article" asp-action="Edit" asp-route-id="@article.Id">Edit</a>
+                            <form style="display: inline-block;" id="form-@article.Id" asp-area="Admin" asp-controller="Article" asp-action="Delete" method="post">
+                                <input type="hidden" name="id" value="@article.Id"/>
+                                <a href="#" onclick="document.getElementById('form-@article.Id').submit();">Delete</a>
+                            </form>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
+            <input type="submit" value="Logout" />
+        </form>
+    </div>
+</div>

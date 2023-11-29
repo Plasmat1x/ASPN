@@ -1,4 +1,4 @@
-﻿@model IQueryable<Article>
+﻿@model IdentityUser
 
 @{
     string strTitle = "Admin panel";
@@ -8,28 +8,15 @@
 <div class="text-center">
     <div>
         <h1 class="display-4">@strTitle</h1>
-        <div> 
-            <h2>Articles</h2>
-            <div>
-                <a asp-area="Admin" asp-controller="Article" asp-action="Edit" asp-route-id="">Add new</a>
-            </div>
-            @if (Model.Any())
-            {
-                <div>
-                    @foreach (var article in Model)
-                    {
-                        <div>
-                            <a asp-area="Admin" asp-controller="Article" asp-action="Show" method="post" asp-route-id="@article.Id">@article.Title</a>
-                            <a asp-area="Admin" asp-controller="Article" asp-action="Edit" asp-route-id="@article.Id">Edit</a>
-                            <form style="display: inline-block;" id="form-@article.Id" asp-area="Admin" asp-controller="Article" asp-action="Delete" method="post">
-                                <input type="hidden" name="id" value="@article.Id"/>
-                                <a href="#" onclick="document.getElementById('form-@article.Id').submit();">Delete</a>
-                            </form>
-                        </div>
-                    }
-                </div>
-            }
-        </div>
+        <h3>@Model.UserName</h3>
+    </div>
+
+    <div>
+        <ul>
+            <li><a asp-area="Admin" asp-controller="Articles" asp-action="Index">Articles</a></li>
+            <li><a asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a></li>
+            <li><a asp-area="Admin" asp-controller="Roles" asp-action="Index">Roles</a></li>
+        </ul>
     </div>
 
     <div class="div-box">

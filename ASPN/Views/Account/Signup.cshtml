@@ -1,10 +1,20 @@
 ﻿@model SignupUserViewModel
 
+@{
+    ViewBag.Title = "Signup";
+}
+
+
 <div>
     <h2>Register account</h2>
     <div>
         <form asp-area="" asp-controller="Account" asp-action="Signup" method="post">
             <div asp-validation-summary="All"></div>
+            <div>
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" />
+                <span asp-validation-for="UserName"></span>
+            </div>
             <div>
                 <label asp-for="Email"></label>
                 <input asp-for="Email" />

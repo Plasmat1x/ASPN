@@ -65,6 +65,7 @@ namespace ASPN.Controllers
                 User user = new User
                 {
                     Email = model.Email,
+                    UserName = model.UserName,
                 };
 
                 var Result = await userMgr.CreateAsync(user, model.Password);

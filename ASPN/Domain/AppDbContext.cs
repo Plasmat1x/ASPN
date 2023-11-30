@@ -114,7 +114,26 @@ namespace ASPN.Domain
                     UserId = "5fe1d4fc-d6ea-43c7-a1f4-73d2f83032bd"
                 });
             });
+
+            modelBuilder.Entity<Page>(ent =>
+            {
+                ent.HasKey(x => x.Id);
+                ent.HasData(new Page
+                {
+                    Id = Guid.Parse("520661c1-0236-42e9-8d5d-c8d74700624c"),
+                    Description = "Test page from db",
+                    CodeWord = "TestPageFromDB",
+                    Title = "Hellow page from DB",
+                    Text = """"
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias eligendi ex voluptatum rem illo sint nisi harum consequatur, magnam itaque fugit nam deserunt nulla nobis veniam blanditiis beatae exercitationem, minus perspiciatis consectetur temporibus repellendus. Odio, mollitia, vel, accusantium officiis minus vero nobis est nisi repudiandae exercitationem ipsa distinctio dolorum. Iure!</p>
+
+                    <p>@Model.CreatedAt</p>
+                    """"
+
+                });
+            });
         }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }

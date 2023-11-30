@@ -1,5 +1,10 @@
 ﻿@model EditUserViewModel
 
+@{
+    ViewBag.Title = "Edit";
+}
+
+
 <div>
     <h1>Edit User: @Model.UserName : </h1>
 
@@ -35,7 +40,7 @@
             <input type="date" asp-for="Birthday" />
             <span asp-validation-for="Birthday"></span>
         </div>
-
+        <hr />
         <div>
             <input type="submit" value="Save" />
         </div>

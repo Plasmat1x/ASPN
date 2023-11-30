@@ -20,6 +20,7 @@ namespace ASPN
             aboutSetcion.Bind(About_info);
 
             builder.Services.AddTransient<IArticleR, ArticleEFR>();
+            builder.Services.AddTransient<IPageR, PageEFR>();
             builder.Services.AddTransient<DataManager>();
 
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

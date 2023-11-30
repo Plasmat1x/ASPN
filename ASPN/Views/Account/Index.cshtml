@@ -2,14 +2,15 @@
 
 <div>
     <h3>@Model.UserName</h3>
-    <div>
-        <p>@Model.UserName</p>
-        <p>@Model.FirstName</p>
-        <p>@Model.LastName</p>
-        <p>@Model.Email</p>
-        <p>@Model.PhoneNumber</p>
-        <p>@Model.Birthday</p>
-    </div>
+    <ul>
+        <li>@nameof(Model.FirstName): @Model.FirstName</li>
+        <li>@nameof(Model.LastName): @Model.LastName</li>
+        <li>@nameof(Model.Email): @Model.Email</li>
+        <li>@nameof(Model.PhoneNumber): @Model.PhoneNumber</li>
+        <li>@nameof(Model.Birthday): @Model.Birthday</li>
+        <li>@nameof(Model.CreatedAt): @Model.CreatedAt</li>
+    </ul>
+    <hr />
     <div>
         <form asp-area="" asp-controller="Account" asp-action="Edit" method="post">
             <input type="submit" value="Edit" />

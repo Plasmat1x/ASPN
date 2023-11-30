@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<User> umgr
+
+@{
+    ViewBag.Title = "Edit Page";
+
+    string CurrentUser = umgr.GetUserAsync(User).Result.UserName;
+}
+﻿
+@model ASPN.Domain.Entities.Page
+
+<div>
+    <h1>@Model.Title</h1>
+    <p>@Model.Id</p>
+    <div>
+        <form asp-area="" asp-controller="Page" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="Author" value="@CurrentUser"/>
+
+            <div asp-validation-summary="All"></div>
+            <div>
+                <label asp-for="Title"></label>
+                <input asp-for="Title" />
+                <span asp-validation-for="Title"></span>
+            </div>
+
+
+            <div>
+                <label asp-for="CodeWord"></label>
+                <input asp-for="CodeWord"/>
+                <span asp-validation-for="CodeWord"></span>
+            </div>
+
+            <div>
+                <label asp-for="Description"></label>
+                <input asp-for="Description"></input>
+                <span asp-validation-for="Description"></span>
+            </div>
+            
+            <div>
+                <label asp-for="Text"></label>
+                <textarea asp-for="Text"></textarea>
+                <span asp-validation-for="Text"></span>
+            </div>
+            <hr />
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+</div>

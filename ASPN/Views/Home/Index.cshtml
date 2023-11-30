@@ -1,7 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using ASPN.Domain;
+
+@{
+    ViewBag.Title = "Home";
 }
+
+@inject DataManager dm
 
 <div>
     <h1>Welcome</h1>
+    <div>
+        <a asp-area="" asp-controller="Page" asp-action="Edit" asp-route-id="">Post new</a>
+    </div>
+    <hr />
+    <div>
+        @foreach (Page p in dm.Pages.GetPages())
+        {
+            <div>
+                <a asp-area="" asp-controller="Page" asp-action="Id" asp-route-id="@p.Id">@p.Title</a>
+                <p>@p.Description</p>
+            </div>
+        }
+    </div>
+
 </div>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Home";
 }
 
-@inject DataManager dm
+@model IEnumerable<Page>
 
 <div>
     <h1>Welcome</h1>
@@ -13,7 +13,7 @@
     </div>
     <hr />
     <div>
-        @foreach (Page p in dm.Pages.GetPages())
+        @foreach (Page p in Model)
         {
             <div>
                 <a asp-area="" asp-controller="Page" asp-action="Id" asp-route-id="@p.Id">@p.Title</a>

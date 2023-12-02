@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Edit Page";
+
+    bool ed = false;
+    if (!String.IsNullOrEmpty(Model.Name))
+    {
+        ed = true;
+    }
+}
+﻿
+@model Role
+
+<div>
+
+
+    @if(ed){
+        <h1>@Model.Name</h1>
+        <p>@Model.Id</p>
+    }
+    else
+    {
+        <h1>New Role</h1>
+    }
+
+    <div>
+        <form asp-area="Admin" asp-controller="Roles" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            @if (ed)
+            {
+                <input type="hidden" asp-for="Name"/>
+            }
+            <div asp-validation-summary="All"></div>
+
+            @if (!ed)
+            {
+                <div>
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+            }
+
+            <div>
+                <label asp-for="Description"></label>
+                <input asp-for="Description" />
+                <span asp-validation-for="Description"></span>
+            </div>
+            <hr />
+            <input type="submit" value="Save" />
+        </form>
+    </div>
+</div>

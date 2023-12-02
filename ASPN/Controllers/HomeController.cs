@@ -17,7 +17,7 @@ namespace ASPN.Controllers
 
         public async Task<IActionResult> Index(CancellationToken ct)
         {
-            return await Task.Run(() => View(), ct);
+            return await Task.Run(() => View(dataManager.Pages.GetPages()), ct);
         }
 
         public async Task<IActionResult> Privacy(CancellationToken ct)
@@ -34,7 +34,6 @@ namespace ASPN.Controllers
         public async Task<IActionResult> Error(CancellationToken ct)
         {
             return await Task.Run(() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }), ct);
-
         }
     }
 }

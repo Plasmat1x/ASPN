@@ -26,6 +26,17 @@ namespace ASPN.Controllers
         public async Task<IActionResult> Index(CancellationToken ct)
         {
             var user = await userMgr.GetUserAsync(User);
+            UserViewModel model = new UserViewModel
+            {
+                Id = Guid.Parse(user.Id),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                CreatedAt = user.CreatedAt,
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName
+            };
 
             if (user != null)
             {
@@ -39,7 +50,7 @@ namespace ASPN.Controllers
                 }
             }
 
-            return await Task.Run(() => View(user), ct);
+            return await Task.Run(() => View(model), ct);
         }
 
         [Authorize]

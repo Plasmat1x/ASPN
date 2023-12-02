@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@model UserRolesViewModel
+
+@{
+
+}
+
+<div>
+    <h1>@Model.UserName</h1>
+
+    <div>
+        <form asp-area="admin" asp-controller="Users" asp-action="AddRole" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.UserName" />
+
+            @foreach (var key in Model.RoleChecked.Keys)
+            {
+                <div>
+                    <label asp-for="RoleChecked[key]">@key</label>
+                    <input type="checkbox" asp-for="RoleChecked[key]"/>
+                </div>
+            }
+            <input type="submit" value="Accept" />
+        </form>
+    </div>
+</div>
+
+@*
+
+
+@model IEnumerable<UserRoleViewModel>
+
+@{
+
+}
+
+
+<div>
+    <h1>@Model.First().UserName</h1>
+
+    <div>
+        <form asp-area="admin" asp-controller="Users" asp-action="AddRole" asp-route-id="@Model.First().Id" method="post" enctype="multipart/form-data">
+            @foreach(var entt in Model)
+            {
+                <div>
+                    <input type="hidden" name="@Model" value="@entt" asp-for="@entt.Id"/>
+                    <input type="hidden" name="@Model" value="@entt" asp-for="@entt.UserName" />
+                    <input type="hidden" name="@Model" value="@entt" asp-for="@entt.RoleName" />
+                    <label asp-for="@entt.RoleName">@entt.RoleName</label>
+                    <input type="checkbox" name="@Model" value="@entt" asp-for="@entt.IsSelected" />
+                </div>
+            }   
+            <input type="submit" value="Accept" />
+        </form>
+    </div>
+</div>
+*@

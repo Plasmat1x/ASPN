@@ -13,22 +13,43 @@
     <a asp-area="Admin" asp-controller="Users" asp-action="AddRole" asp-route-id="@Model.Id">Add Users to role</a>
     <hr />
     <h3>@Model.UserName</h3>
-    <ul>
-        <li asp-for="Id">@Model.Id</li>
-        <li>@nameof(Model.UserName): @Model.UserName</li>
-        <li>@nameof(Model.FirstName): @Model.FirstName</li>
-        <li>@nameof(Model.LastName): @Model.LastName</li>
-        <li>@nameof(Model.Email): @Model.Email</li>
-        <li>@nameof(Model.PhoneNumber): @Model.PhoneNumber</li>
-        <li>@nameof(Model.Birthday): @Model.Birthday</li>
-        <li>@nameof(Model.CreatedAt): @Model.CreatedAt</li>
 
-        <li>Roles</li>
-        @foreach(var role in Model.Roles)
+    <div>
+        <div>
+            <label asp-for="Id"></label>
+            <input asp-for="Id" readonly />
+        </div>
+        <div>
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" readonly />
+        </div>
+        <div>
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" readonly />
+        </div>
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" readonly />
+        </div>
+        <div>
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" readonly />
+        </div>
+        <div>
+            <label asp-for="Birthday"></label>
+            <input asp-for="Birthday" readonly />
+        </div>
+        <div>
+            <label asp-for="CreatedAt"></label>
+            <input asp-for="CreatedAt" readonly />
+        </div>
+    </div>
+    <hr />
+    <h4>Roles: </h4>
+    <ul>
+        @foreach (var role in Model.Roles)
         {
-            <div>
-                @role
-            </div>
+            <li>@role</li>
         }
     </ul>
 </div>

@@ -46,7 +46,7 @@ namespace ASPN.Controllers
 
                 if (check)
                 {
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    return RedirectToAction("Index", "Home", new { area = "Admin", id = user.Id });
                 }
             }
 

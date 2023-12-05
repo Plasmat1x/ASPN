@@ -1,14 +1,14 @@
 ﻿using ASPN.Domain.Repositories.Abstract.Store;
 
 namespace ASPN.Domain.Repositories.EF.Store {
-    public class ItemImageEFR:IItemImageR {
+    public class ItemImageEFR: IItemImageR {
         private readonly AppDbContext context;
 
         public ItemImageEFR(AppDbContext context) {
-            this.context=context;
+            this.context = context;
         }
 
-        public void AddImageToItem(Guid ItemId, string PathToImage) {
+        public void SaveImageToItem(Guid ItemId, string PathToImage) {
             throw new NotImplementedException();
         }
 
@@ -20,7 +20,15 @@ namespace ASPN.Domain.Repositories.EF.Store {
             throw new NotImplementedException();
         }
 
-        public void UpdateImage(Guid ImageId, string PathToImage) {
+        public Task<ICollection<string>> GetImagesForItemAync(Guid ItemId, CancellationToken ct = default) {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteImageFromItemAsync(Guid ItemId, Guid ImageId, CancellationToken ct = default) {
+            throw new NotImplementedException();
+        }
+
+        public Task SaveImageToItemAsync(Guid ItemId, string PathToImage, CancellationToken ct = default) {
             throw new NotImplementedException();
         }
     }

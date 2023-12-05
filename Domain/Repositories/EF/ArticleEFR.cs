@@ -4,28 +4,28 @@ using ASPN.Domain.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASPN.Domain.Repositories.EF {
-    public class ArticleEFR:IArticleR {
+    public class ArticleEFR: IArticleR {
         private readonly AppDbContext context;
 
         public ArticleEFR(AppDbContext context) {
-            this.context=context;
+            this.context = context;
         }
 
         public void SaveArticle(Article article) {
-            if(article.Id==default)
-                context.Entry(article).State=EntityState.Added;
+            if(article.Id == default)
+                context.Entry(article).State = EntityState.Added;
             else
-                context.Entry(article).State=EntityState.Modified;
+                context.Entry(article).State = EntityState.Modified;
 
             context.SaveChanges();
         }
 
         public Article GetArticleByCodeWord(string CodeWord) {
-            return context.Articles.FirstOrDefault(x => x.CodeWord==CodeWord);
+            return context.Articles.FirstOrDefault(x => x.CodeWord == CodeWord);
         }
 
         public Article GetArticleById(Guid id) {
-            return context.Articles.FirstOrDefault(x => x.Id==id);
+            return context.Articles.FirstOrDefault(x => x.Id == id);
         }
 
         public IQueryable<Article> GetArticles() {
@@ -33,36 +33,36 @@ namespace ASPN.Domain.Repositories.EF {
         }
 
         public void DeleteArticle(Guid id) {
-            context.Articles.Remove(new Article() { Id=id });
+            context.Articles.Remove(new Article() { Id = id });
             context.SaveChanges();
         }
 
-        public async Task<IQueryable<Article>> GetArticlesAsync(CancellationToken ct = default) {
+        public async Task<IQueryable<Article>> GetArticlesAsync(CancellationToken ct) {
             var data = context.Articles;
             return data;
         }
 
-        public async Task<Article> GetArticleByIdAsync(Guid id, CancellationToken ct = default) {
-            var data = await context.Articles.FirstOrDefaultAsync(x => x.Id==id, ct);
+        public async Task<Article> GetArticleByIdAsync(Guid id, CancellationToken ct) {
+            var data = await context.Articles.FirstOrDefaultAsync(x => x.Id == id, ct);
             return data;
         }
 
-        public async Task<Article> GetArticleByCodeWordAsync(string CodeWord, CancellationToken ct = default) {
-            var data = await context.Articles.FirstOrDefaultAsync(x => x.CodeWord==CodeWord, ct);
+        public async Task<Article> GetArticleByCodeWordAsync(string CodeWord, CancellationToken ct) {
+            var data = await context.Articles.FirstOrDefaultAsync(x => x.CodeWord == CodeWord, ct);
             return data;
         }
 
-        public async Task SaveArticleAsync(Article article, CancellationToken ct = default) {
-            if(article.Id==default)
-                context.Entry(article).State=EntityState.Added;
+        public async Task SaveArticleAsync(Article article, CancellationToken ct) {
+            if(article.Id == default)
+                context.Entry(article).State = EntityState.Added;
             else
-                context.Entry(article).State=EntityState.Modified;
+                context.Entry(article).State = EntityState.Modified;
 
             await context.SaveChangesAsync(ct);
         }
 
-        public async Task DeleteArticleAsync(Guid id, CancellationToken ct = default) {
-            context.Articles.Remove(new Article() { Id=id });
+        public async Task DeleteArticleAsync(Guid id, CancellationToken ct) {
+            context.Articles.Remove(new Article() { Id = id });
             await context.SaveChangesAsync(ct);
         }
     }

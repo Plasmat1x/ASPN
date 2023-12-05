@@ -17,15 +17,15 @@ namespace ASPN.Domain.Repositories.Abstract {
 
         //======async=======
         //Read
-        public Task<IQueryable<Article>> GetArticlesAsync(CancellationToken ct);
-        public Task<Article> GetArticleByIdAsync(Guid id, CancellationToken ct);
-        public Task<Article> GetArticleByCodeWordAsync(string CodeWord, CancellationToken ct);
+        public Task<IQueryable<Article>> GetArticlesAsync(CancellationToken ct = default);
+        public Task<Article> GetArticleByIdAsync(Guid id, CancellationToken ct = default);
+        public Task<Article> GetArticleByCodeWordAsync(string CodeWord, CancellationToken ct = default);
 
         // Create/Update
-        public Task SaveArticleAsync(Article article, CancellationToken ct);
+        public Task SaveArticleAsync(Article article, CancellationToken ct = default);
 
         //Delete
-        public Task DeleteArticleAsync(Guid id, CancellationToken ct);
+        public Task DeleteArticleAsync(Guid id, CancellationToken ct = default);
 
     }
 }

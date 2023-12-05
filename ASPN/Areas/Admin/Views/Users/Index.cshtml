@@ -17,9 +17,8 @@
                 <li>
                     <a asp-area="Admin" asp-controller="Users" asp-action="User" asp-route-id="@user.Id">@user.UserName</a>
 
-                    <form style="display: inline-block;" id="form-@user.Id" asp-area="Admin" asp-controller="Users" asp-action="Delete" method="post">
-                        <input type="hidden" name="id" value="@user.Id">
-                        <a href="#" onclick="document.getElementById('form-@user.Id').submit();">Delete</a>
+                    <form asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" method="post">
+                        <input type="submit" value="Delete">
                     </form>
                 </li>
             }

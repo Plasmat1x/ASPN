@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPN.Areas.Admin.Controllers {
     [Area("Admin")]
-    public class RolesController:Controller {
+    public class RolesController: Controller {
         private readonly DataManager dataMgr;
         private readonly UserManager<User> userMgr;
         private readonly RoleManager<Role> roleMgr;
@@ -21,12 +21,12 @@ namespace ASPN.Areas.Admin.Controllers {
 
         public async Task<IActionResult> Index(CancellationToken ct) {
             var roles = roleMgr.Roles;
-            return await Task.Run(() => View(roles), ct);
+            return View(roles);
         }
 
         public async Task<IActionResult> Role(Guid id, CancellationToken ct) {
             var role = await roleMgr.FindByIdAsync(id.ToString());
-            return await Task.Run(() => View(role), ct);
+            return View(role);
         }
 
         [HttpPost]
@@ -36,15 +36,15 @@ namespace ASPN.Areas.Admin.Controllers {
             var result = await roleMgr.DeleteAsync(role);
 
             if(result.Succeeded) {
-                return await Task.Run(() => View(), ct);
-
+                return RedirectToAction(nameof(RolesController.Index), nameof(RolesController).CutController(), new { area = "Admin" });
             }
-            return RedirectToAction(nameof(RolesController.Index), nameof(RolesController), new { area = "Admin" });
+            return View();
+
         }
 
         public async Task<IActionResult> Edit(Guid id, CancellationToken ct) {
             var role = id == default ? new Role() : await roleMgr.FindByIdAsync(id.ToString());
-            return await Task.Run(() => View(role), ct);
+            return View(role);
         }
 
         [HttpPost]
@@ -71,7 +71,7 @@ namespace ASPN.Areas.Admin.Controllers {
                     return RedirectToAction(nameof(RolesController.Index), nameof(RolesController).CutController(), new { area = "Admin" });
                 }
             }
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
     }
 }

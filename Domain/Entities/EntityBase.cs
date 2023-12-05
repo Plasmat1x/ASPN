@@ -7,6 +7,6 @@
         public virtual string? Author { get; set; }
         public virtual string? ImagePath { get; set; }
         public DateTime CreatedAt { get; set; }
-        protected EntityBase() => CreatedAt=DateTime.UtcNow;
+        protected EntityBase() => CreatedAt = DateTime.UtcNow;
     }
 }

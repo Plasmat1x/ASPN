@@ -4,7 +4,7 @@ using ASPN.Domain.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASPN.Domain.Repositories.EF {
-    public class PageEFR:IPageR {
+    public class PageEFR: IPageR {
         private readonly AppDbContext context;
         public PageEFR(AppDbContext context) { this.context = context; }
 
@@ -30,17 +30,17 @@ namespace ASPN.Domain.Repositories.EF {
             context.SaveChanges();
         }
 
-        public async Task<Page> GetPageAsync(Guid id, CancellationToken ct = default) {
+        public async Task<Page> GetPageAsync(Guid id, CancellationToken ct) {
             var data = await context.Pages.FirstOrDefaultAsync(x => x.Id == id, ct);
             return data;
         }
 
-        public async Task<IQueryable<Page>> GetPagesAsync(CancellationToken ct = default) {
+        public async Task<IQueryable<Page>> GetPagesAsync(CancellationToken ct) {
             var data = context.Pages;
             return data;
         }
 
-        public async Task SavePageAsync(Page page, CancellationToken ct = default) {
+        public async Task SavePageAsync(Page page, CancellationToken ct) {
             if(page.Id == default)
                 context.Entry(page).State = EntityState.Added;
             else
@@ -49,7 +49,7 @@ namespace ASPN.Domain.Repositories.EF {
             await context.SaveChangesAsync(ct);
         }
 
-        public async Task DeletePageAsync(Guid id, CancellationToken ct = default) {
+        public async Task DeletePageAsync(Guid id, CancellationToken ct) {
             context.Pages.Remove(new Page { Id = id });
             await context.SaveChangesAsync(ct);
         }

@@ -1,9 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
 @model IQueryable<Role>
 
 @{
@@ -17,14 +13,12 @@
     <hr />
     <div>
         <ul>
-            @foreach (var role in Model)
-            {
+            @foreach(var role in Model) {
                 <li>
                     <a asp-area="Admin" asp-controller="Roles" asp-action="Role" asp-route-id="@role.Id">@role.Name</a>
 
-                    <form style="display: inline-block;" id="form-@role.Id" asp-area="Admin" asp-controller="Roles" asp-action="Delete" method="post">
-                        <input type="hidden" name="id" value="@role.Id">
-                        <a href="#" onclick="document.getElementById('form-@role.Id').submit();">Delete</a>
+                    <form asp-area="Admin" asp-controller="Roles" asp-action="Delete" asp-route-id="@role.Id" method="post">
+                        <input type="submit" value="Delete">
                     </form>
                 </li>
             }

@@ -8,9 +8,9 @@ namespace ASPN.Domain.Repositories.Abstract {
         public void DeletePage(Guid id);
 
         //=======async
-        public Task<Page> GetPageAsync(Guid id, CancellationToken ct);
-        public Task<IQueryable<Page>> GetPagesAsync(CancellationToken ct);
-        public Task SavePageAsync(Page page, CancellationToken ct);
-        public Task DeletePageAsync(Guid id, CancellationToken ct);
+        public Task<Page> GetPageAsync(Guid id, CancellationToken ct = default);
+        public Task<IQueryable<Page>> GetPagesAsync(CancellationToken ct = default);
+        public Task SavePageAsync(Page page, CancellationToken ct = default);
+        public Task DeletePageAsync(Guid id, CancellationToken ct = default);
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPN.Areas.Admin.Controllers {
     [Area("Admin")]
-    public class UsersController:Controller {
+    public class UsersController: Controller {
         private readonly DataManager dataMgr;
         private readonly UserManager<User> userMgr;
         private readonly RoleManager<Role> roleMgr;
@@ -20,7 +20,8 @@ namespace ASPN.Areas.Admin.Controllers {
         }
 
         public async Task<IActionResult> Index(CancellationToken ct) {
-            return await Task.Run(() => View(userMgr.Users), ct);
+            var model = userMgr.Users;
+            return View(model);
         }
 
         public async Task<IActionResult> User(Guid id, CancellationToken ct) {
@@ -39,7 +40,7 @@ namespace ASPN.Areas.Admin.Controllers {
 
             model.Roles = await userMgr.GetRolesAsync(user);
 
-            return await Task.Run(async () => View(model), ct);
+            return View(model);
         }
 
         [HttpPost]
@@ -49,71 +50,11 @@ namespace ASPN.Areas.Admin.Controllers {
             var result = await userMgr.DeleteAsync(user);
 
             if(result.Succeeded) {
-                return await Task.Run(() => View(), ct);
-
+                return RedirectToAction("Index", "Users", new { area = "Admin" });
             }
 
-            return RedirectToAction("Index", "Users", new { area = "Admin" });
+            return View();
         }
-
-
-        /*
-        public async Task<IActionResult> AddRole(Guid id, CancellationToken ct)
-        {
-            var user = await userMgr.FindByIdAsync(id.ToString());
-
-            List<UserRoleViewModel> list = new List<UserRoleViewModel>();
-
-            foreach (var role in roleMgr.Roles)
-            {
-                UserRoleViewModel URVM;
-
-                if (await userMgr.IsInRoleAsync(user, role.Name))
-                {
-                    URVM = new UserRoleViewModel { Id = id, UserName = user.UserName, RoleName = role.Name, IsSelected = true };
-                }
-                else
-                {
-                    URVM = new UserRoleViewModel { Id = id, UserName = user.UserName, RoleName = role.Name, IsSelected = false };
-                }
-
-                list.Add(URVM);
-            }
-
-            return await Task.Run(() => View(list), ct);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddRole(IEnumerable<UserRoleViewModel> list, Guid id, CancellationToken ct)
-        {
-
-            var user = await userMgr.FindByIdAsync(id.ToString());
-
-            if (ModelState.IsValid)
-            {
-                List<string> inroles = new List<string>();
-                List<string> exroles = new List<string>();
-
-                foreach (var entt in list)
-                {
-                    if (entt.IsSelected)
-                        inroles.Append(entt.RoleName);
-                    else
-                        exroles.Append(entt.RoleName);
-                }
-
-                var exres = await userMgr.RemoveFromRolesAsync(user, exroles);
-                var inres = await userMgr.AddToRolesAsync(user, inroles);
-
-                if (exres.Succeeded && inres.Succeeded)
-                {
-                    return RedirectToAction(nameof(UsersController.User), nameof(UsersController).CutController(), new { area = "Admin", Id = id });
-                }
-            }
-
-            return await Task.Run(() => View(list), ct);
-        }
-        */
 
         public async Task<IActionResult> AddRole(Guid id, CancellationToken ct) {
             var user = await userMgr.FindByIdAsync(id.ToString());
@@ -133,7 +74,7 @@ namespace ASPN.Areas.Admin.Controllers {
                 }
             }
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [HttpPost]
@@ -161,7 +102,7 @@ namespace ASPN.Areas.Admin.Controllers {
                 return RedirectToAction(nameof(UsersController.User), nameof(UsersController).CutController(), new { area = "Admin", Id = user.Id });
             }
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
     }
 }

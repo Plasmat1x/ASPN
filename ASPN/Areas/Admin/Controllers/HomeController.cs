@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPN.Areas.Admin.Controllers {
     [Area("Admin")]
-    public class HomeController:Controller {
+    public class HomeController: Controller {
         private readonly DataManager dataMgr;
         private readonly UserManager<User> userMgr;
 
@@ -18,7 +18,6 @@ namespace ASPN.Areas.Admin.Controllers {
 
         public async Task<IActionResult> Index(Guid id, CancellationToken ct) {
             var user = await userMgr.FindByIdAsync(id.ToString());
-
             var roles = await userMgr.GetRolesAsync(user);
 
             UserViewModel model = new UserViewModel {
@@ -33,7 +32,7 @@ namespace ASPN.Areas.Admin.Controllers {
                 Roles = roles,
             };
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
     }
 }

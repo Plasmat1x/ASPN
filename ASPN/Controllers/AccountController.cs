@@ -1,5 +1,6 @@
 ﻿using ASPN.Domain.Entities.Identity;
 using ASPN.Models;
+using ASPN.Services;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace ASPN.Controllers {
     [Authorize]
-    public class AccountController:Controller {
+    public class AccountController: Controller {
         private readonly UserManager<User> userMgr;
         private readonly SignInManager<User> signinMgr;
         private readonly RoleManager<Role> roleMgr;
@@ -41,23 +42,23 @@ namespace ASPN.Controllers {
                 bool check = (userRole.FirstOrDefault(x => x == "admin") == null ? false : true);
 
                 if(check) {
-                    return RedirectToAction("Index", "Home", new { area = "Admin", id = user.Id });
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController(), new { area = "Admin", id = user.Id });
                 }
             }
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [Authorize]
         public async Task<IActionResult> Logout(CancellationToken ct) {
             await signinMgr.SignOutAsync();
-            return await Task.Run(() => RedirectToAction("Index", "Home"));
+            return RedirectToAction(nameof(AccountController.Index), nameof(AccountController).CutController());
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Signup(CancellationToken ct) {
-            return await Task.Run(() => View(), ct);
+            return View();
         }
 
         [HttpPost]
@@ -75,7 +76,7 @@ namespace ASPN.Controllers {
 
                 if(Result.Succeeded) {
                     await signinMgr.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction(nameof(AccountController.Index), nameof(AccountController).CutController());
                 }
                 else {
                     foreach(var Err in Result.Errors) {
@@ -84,7 +85,7 @@ namespace ASPN.Controllers {
                 }
             }
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [HttpGet]
@@ -93,10 +94,10 @@ namespace ASPN.Controllers {
             var user = await userMgr.GetUserAsync(User);
 
             if(user != null) {
-                return RedirectToAction("Index", "Account");
+                return RedirectToAction(nameof(AccountController.Index), nameof(AccountController).CutController());
             }
 
-            return await Task.Run(() => View(new SigninUserViewModel()), ct);
+            return View(new SigninUserViewModel());
         }
 
         [HttpPost]
@@ -109,12 +110,12 @@ namespace ASPN.Controllers {
                     await signinMgr.SignOutAsync();
                     SignInResult result = await signinMgr.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                     if(result.Succeeded) {
-                        return await Task.Run(() => RedirectToAction("Index", "Account"));
+                        return RedirectToAction(nameof(AccountController.Index), nameof(AccountController).CutController());
                     }
                 }
                 ModelState.AddModelError(nameof(SigninUserViewModel.Email), "Incorrect email or/and password");
             }
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [HttpGet]
@@ -130,7 +131,7 @@ namespace ASPN.Controllers {
                 Birthday = user.Birthday.Value,
             };
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [HttpPost]
@@ -148,7 +149,7 @@ namespace ASPN.Controllers {
                 var result = await userMgr.UpdateAsync(user);
 
                 if(result.Succeeded) {
-                    return RedirectToAction("Index", "Account");
+                    return RedirectToAction(nameof(AccountController.Index), nameof(AccountController).CutController());
                 }
 
                 foreach(var err in result.Errors) {
@@ -156,7 +157,7 @@ namespace ASPN.Controllers {
                 }
             }
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
     }
 }

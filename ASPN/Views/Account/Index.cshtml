@@ -34,14 +34,6 @@
         </div>
     </div>
     <hr />
-    <h4>Roles: </h4>
-    <ul>
-        @foreach (var role in Model.Roles)
-        {
-            <li>@role</li>
-        }
-    </ul>
-    <hr />
     <div>
         <form asp-area="" asp-controller="Account" asp-action="Edit" method="post">
             <input type="submit" value="Edit" />

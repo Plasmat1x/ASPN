@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPN.Controllers {
-    public class PageController:Controller {
+    public class PageController: Controller {
         private readonly DataManager dataMgr;
         private readonly UserManager<User> umgr;
 
@@ -48,7 +48,7 @@ namespace ASPN.Controllers {
                 CreatedAt = page.CreatedAt
             };
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [HttpPost]
@@ -65,20 +65,20 @@ namespace ASPN.Controllers {
                     CreatedAt = model.CreatedAt
                 };
 
-                dataMgr.Pages.SavePage(page);
+                dataMgr.Pages.SavePageAsync(page);
                 return RedirectToAction(nameof(PageController.Id), nameof(PageController).CutController(), new {
                     id = page.Id
                 });
             }
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Delete(Guid id, CancellationToken ct) {
             if(ModelState.IsValid) {
-                dataMgr.Pages.DeletePage(id);
+                dataMgr.Pages.DeletePageAsync(id);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
 

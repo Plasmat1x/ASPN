@@ -5,8 +5,8 @@ namespace ASPN.Domain {
         public IArticleR Articles { get; set; }
         public IPageR Pages { get; set; }
         public DataManager(IArticleR articleR, IPageR pageR) {
-            this.Articles=articleR;
-            this.Pages=pageR;
+            this.Articles = articleR;
+            this.Pages = pageR;
         }
     }
 }

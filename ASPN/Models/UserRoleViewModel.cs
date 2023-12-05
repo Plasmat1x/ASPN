@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace ASPN.Models
-{
-    public class UserRoleViewModel
-    {
+namespace ASPN.Models {
+    public class UserRoleViewModel {
         [Required]
         [Display(Name = "Id")]
         public Guid Id { get; set; }

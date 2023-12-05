@@ -1,16 +1,12 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ASPN.Migrations
-{
+namespace ASPN.Migrations {
     /// <inheritdoc />
-    public partial class Update_2 : Migration
-    {
+    public partial class Update_2:Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
@@ -34,8 +30,7 @@ namespace ASPN.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",

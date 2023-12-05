@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ASPN.Models
-{
-    public class SignupUserViewModel
-    {
+namespace ASPN.Models {
+    public class SignupUserViewModel {
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }

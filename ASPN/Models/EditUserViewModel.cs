@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ASPN.Models
-{
-    public class EditUserViewModel
-    {
+namespace ASPN.Models {
+    public class EditUserViewModel {
 
 
         [Display(Name = "Username")]

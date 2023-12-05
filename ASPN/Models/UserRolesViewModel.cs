@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ASPN.Models
-{
-    public class UserRolesViewModel
-    {
+namespace ASPN.Models {
+    public class UserRolesViewModel {
         [Required]
         [Display(Name = "Id")]
         public Guid Id { get; set; }

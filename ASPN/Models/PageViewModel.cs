@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ASPN.Models
-{
-    public class PageViewModel
-    {
+namespace ASPN.Models {
+    public class PageViewModel {
         [Required]
         [Display(Name = "Id")]
         public string Id { get; set; }
@@ -29,6 +27,6 @@ namespace ASPN.Models
         [Display(Name = "Created at")]
         public DateTime CreatedAt { get; set; }
 
-        public PageViewModel() { Id = new Guid().ToString(); }
+        public PageViewModel() { Id=new Guid().ToString(); }
     }
 }

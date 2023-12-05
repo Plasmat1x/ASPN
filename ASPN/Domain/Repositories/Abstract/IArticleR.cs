@@ -1,9 +1,7 @@
 ﻿using ASPN.Domain.Entities;
 
-namespace ASPN.Domain.Repositories.Abstract
-{
-    public interface IArticleR
-    {
+namespace ASPN.Domain.Repositories.Abstract {
+    public interface IArticleR {
 
         //Read
         public IQueryable<Article> GetArticles();

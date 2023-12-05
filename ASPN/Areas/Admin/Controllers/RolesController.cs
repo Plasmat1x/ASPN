@@ -14,9 +14,9 @@ namespace ASPN.Areas.Admin.Controllers {
         private readonly RoleManager<Role> roleMgr;
 
         public RolesController(DataManager dataMgr, UserManager<User> userMgr, RoleManager<Role> roleMgr) {
-            this.dataMgr=dataMgr;
-            this.userMgr=userMgr;
-            this.roleMgr=roleMgr;
+            this.dataMgr = dataMgr;
+            this.userMgr = userMgr;
+            this.roleMgr = roleMgr;
         }
 
         public async Task<IActionResult> Index(CancellationToken ct) {
@@ -43,7 +43,7 @@ namespace ASPN.Areas.Admin.Controllers {
         }
 
         public async Task<IActionResult> Edit(Guid id, CancellationToken ct) {
-            var role = id==default ? new Role() : await roleMgr.FindByIdAsync(id.ToString());
+            var role = id == default ? new Role() : await roleMgr.FindByIdAsync(id.ToString());
             return await Task.Run(() => View(role), ct);
         }
 
@@ -53,8 +53,8 @@ namespace ASPN.Areas.Admin.Controllers {
                 if(await roleMgr.RoleExistsAsync(model.Name)) {
                     var role = await roleMgr.FindByNameAsync(model.Name);
 
-                    role.Name=model.Name;
-                    role.Description=model.Description;
+                    role.Name = model.Name;
+                    role.Description = model.Description;
 
                     var res = await roleMgr.UpdateAsync(role);
 
@@ -62,9 +62,9 @@ namespace ASPN.Areas.Admin.Controllers {
                 }
                 else {
                     var role = new Role {
-                        Id=new Guid().ToString(),
-                        Name=model.Name,
-                        Description=model.Description
+                        Id = new Guid().ToString(),
+                        Name = model.Name,
+                        Description = model.Description
                     };
 
                     await roleMgr.CreateAsync(role);

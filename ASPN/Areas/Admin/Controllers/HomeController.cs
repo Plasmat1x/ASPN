@@ -12,8 +12,8 @@ namespace ASPN.Areas.Admin.Controllers {
         private readonly UserManager<User> userMgr;
 
         public HomeController(DataManager dataMgr, UserManager<User> userMgr) {
-            this.userMgr=userMgr;
-            this.dataMgr=dataMgr;
+            this.userMgr = userMgr;
+            this.dataMgr = dataMgr;
         }
 
         public async Task<IActionResult> Index(Guid id, CancellationToken ct) {
@@ -22,15 +22,15 @@ namespace ASPN.Areas.Admin.Controllers {
             var roles = await userMgr.GetRolesAsync(user);
 
             UserViewModel model = new UserViewModel {
-                Id=Guid.Parse(user.Id),
-                UserName=user.UserName,
-                FirstName=user.FirstName,
-                LastName=user.LastName,
-                Email=user.Email,
-                PhoneNumber=user.PhoneNumber,
-                Birthday=user.Birthday,
-                CreatedAt=user.CreatedAt,
-                Roles=roles,
+                Id = Guid.Parse(user.Id),
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Birthday = user.Birthday,
+                CreatedAt = user.CreatedAt,
+                Roles = roles,
             };
 
             return await Task.Run(() => View(model), ct);

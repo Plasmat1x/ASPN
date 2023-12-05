@@ -10,25 +10,27 @@ namespace ASPN.Controllers {
         private readonly ILogger<HomeController> _logger;
         private readonly DataManager dataManager;
         public HomeController(ILogger<HomeController> logger, DataManager dataManager) {
-            _logger=logger;
-            this.dataManager=dataManager;
+            _logger = logger;
+            this.dataManager = dataManager;
         }
 
         public async Task<IActionResult> Index(CancellationToken ct) {
-            return await Task.Run(() => View(dataManager.Pages.GetPages()), ct);
+
+            var model = await dataManager.Pages.GetPagesAsync(ct);
+            return View(model);
         }
 
         public async Task<IActionResult> Privacy(CancellationToken ct) {
-            return await Task.Run(() => View(), ct);
+            return View();
         }
 
         public async Task<IActionResult> About(CancellationToken ct) {
-            return await Task.Run(() => View(Program.About_info), ct);
+            return View(Program.About_info);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Error(CancellationToken ct) {
-            return await Task.Run(() => View(new ErrorViewModel { RequestId=Activity.Current?.Id??HttpContext.TraceIdentifier }), ct);
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

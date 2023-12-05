@@ -10,7 +10,8 @@ namespace ASPN.Domain.Repositories.EF.Store {
         }
 
         public void CreateItem(Item item) {
-            throw new NotImplementedException();
+            context.Add<Item>(item);
+            context.SaveChanges();
         }
 
         public void DeleteItem(Guid id) {

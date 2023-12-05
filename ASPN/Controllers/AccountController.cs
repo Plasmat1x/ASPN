@@ -15,9 +15,9 @@ namespace ASPN.Controllers {
         private readonly RoleManager<Role> roleMgr;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<Role> roleManager) {
-            this.userMgr=userManager;
-            this.signinMgr=signInManager;
-            this.roleMgr=roleManager;
+            this.userMgr = userManager;
+            this.signinMgr = signInManager;
+            this.roleMgr = roleManager;
         }
 
         [HttpGet]
@@ -25,20 +25,20 @@ namespace ASPN.Controllers {
         public async Task<IActionResult> Index(CancellationToken ct) {
             var user = await userMgr.GetUserAsync(User);
             UserViewModel model = new UserViewModel {
-                Id=Guid.Parse(user.Id),
-                FirstName=user.FirstName,
-                LastName=user.LastName,
-                Email=user.Email,
-                Birthday=user.Birthday,
-                CreatedAt=user.CreatedAt,
-                PhoneNumber=user.PhoneNumber,
-                UserName=user.UserName
+                Id = Guid.Parse(user.Id),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                CreatedAt = user.CreatedAt,
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName
             };
 
-            if(user!=null) {
+            if(user != null) {
                 var userRole = await userMgr.GetRolesAsync(user);
 
-                bool check = (userRole.FirstOrDefault(x => x=="admin")==null ? false : true);
+                bool check = (userRole.FirstOrDefault(x => x == "admin") == null ? false : true);
 
                 if(check) {
                     return RedirectToAction("Index", "Home", new { area = "Admin", id = user.Id });
@@ -65,8 +65,8 @@ namespace ASPN.Controllers {
         public async Task<IActionResult> Signup(SignupUserViewModel model, CancellationToken ct) {
             if(ModelState.IsValid) {
                 User user = new User {
-                    Email=model.Email,
-                    UserName=model.UserName,
+                    Email = model.Email,
+                    UserName = model.UserName,
                 };
 
                 var Result = await userMgr.CreateAsync(user, model.Password);
@@ -92,7 +92,7 @@ namespace ASPN.Controllers {
         public async Task<IActionResult> Signin(CancellationToken ct) {
             var user = await userMgr.GetUserAsync(User);
 
-            if(user!=null) {
+            if(user != null) {
                 return RedirectToAction("Index", "Account");
             }
 
@@ -105,7 +105,7 @@ namespace ASPN.Controllers {
             if(ModelState.IsValid) {
                 User user = await userMgr.FindByEmailAsync(model.Email);
 
-                if(user!=null) {
+                if(user != null) {
                     await signinMgr.SignOutAsync();
                     SignInResult result = await signinMgr.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                     if(result.Succeeded) {
@@ -123,11 +123,11 @@ namespace ASPN.Controllers {
             var user = await userMgr.GetUserAsync(User);
 
             var model = new EditUserViewModel {
-                UserName=user.UserName,
-                FirstName=user.FirstName,
-                LastName=user.LastName,
-                PhoneNumber=user.PhoneNumber,
-                Birthday=user.Birthday.Value,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Birthday = user.Birthday.Value,
             };
 
             return await Task.Run(() => View(model), ct);
@@ -139,11 +139,11 @@ namespace ASPN.Controllers {
             if(ModelState.IsValid) {
                 var user = await userMgr.GetUserAsync(User);
 
-                user.UserName=model.UserName;
-                user.FirstName=model.FirstName;
-                user.LastName=model.LastName;
-                user.PhoneNumber=model.PhoneNumber;
-                user.Birthday=model.Birthday;
+                user.UserName = model.UserName;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
 
                 var result = await userMgr.UpdateAsync(user);
 

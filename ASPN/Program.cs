@@ -24,22 +24,22 @@ namespace ASPN {
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddIdentity<User, Role>(options => {
-                options.User.RequireUniqueEmail=true;
-                options.Password.RequiredLength=8;
-                options.Password.RequireNonAlphanumeric=false;
-                options.Password.RequireDigit=true;
-                options.Password.RequireLowercase=true;
-                options.Password.RequireUppercase=true;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
             })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(options => {
-                options.Cookie.Name="pl1x_auth";
-                options.Cookie.HttpOnly=true;
-                options.LoginPath="/account/signin";
-                options.AccessDeniedPath="/account/accessdenied";
-                options.SlidingExpiration=true;
+                options.Cookie.Name = "pl1x_auth";
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/account/signin";
+                options.AccessDeniedPath = "/account/accessdenied";
+                options.SlidingExpiration = true;
             });
 
             builder.Services.AddAuthorization(options => {

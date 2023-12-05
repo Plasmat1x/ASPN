@@ -14,9 +14,9 @@ namespace ASPN.Areas.Admin.Controllers {
         private readonly RoleManager<Role> roleMgr;
 
         public UsersController(DataManager dataMgr, UserManager<User> userMgr, RoleManager<Role> roleMgr) {
-            this.dataMgr=dataMgr;
-            this.userMgr=userMgr;
-            this.roleMgr=roleMgr;
+            this.dataMgr = dataMgr;
+            this.userMgr = userMgr;
+            this.roleMgr = roleMgr;
         }
 
         public async Task<IActionResult> Index(CancellationToken ct) {
@@ -27,17 +27,17 @@ namespace ASPN.Areas.Admin.Controllers {
             var user = await userMgr.FindByIdAsync(id.ToString());
 
             UserViewModel model = new UserViewModel {
-                Id=Guid.Parse(user.Id),
-                FirstName=user.FirstName,
-                LastName=user.LastName,
-                Email=user.Email,
-                Birthday=user.Birthday,
-                CreatedAt=user.CreatedAt,
-                PhoneNumber=user.PhoneNumber,
-                UserName=user.UserName
+                Id = Guid.Parse(user.Id),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                CreatedAt = user.CreatedAt,
+                PhoneNumber = user.PhoneNumber,
+                UserName = user.UserName
             };
 
-            model.Roles=await userMgr.GetRolesAsync(user);
+            model.Roles = await userMgr.GetRolesAsync(user);
 
             return await Task.Run(async () => View(model), ct);
         }
@@ -120,16 +120,16 @@ namespace ASPN.Areas.Admin.Controllers {
 
             var model = new UserRolesViewModel();
 
-            model.Id=id;
-            model.UserName=user.UserName;
-            model.RoleChecked=new Dictionary<string, bool>();
+            model.Id = id;
+            model.UserName = user.UserName;
+            model.RoleChecked = new Dictionary<string, bool>();
 
             foreach(var role in roleMgr.Roles) {
                 if(await userMgr.IsInRoleAsync(user, role.Name)) {
-                    model.RoleChecked[role.Name]=true;
+                    model.RoleChecked[role.Name] = true;
                 }
                 else {
-                    model.RoleChecked[role.Name]=false;
+                    model.RoleChecked[role.Name] = false;
                 }
             }
 
@@ -145,7 +145,7 @@ namespace ASPN.Areas.Admin.Controllers {
                 var exroles = new List<string>();
 
                 foreach(var rc in model.RoleChecked) {
-                    if(rc.Value==false)
+                    if(rc.Value == false)
                         exroles.Add(rc.Key);
                     else
                         inroles.Add(rc.Key);

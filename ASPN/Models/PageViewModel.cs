@@ -27,6 +27,6 @@ namespace ASPN.Models {
         [Display(Name = "Created at")]
         public DateTime CreatedAt { get; set; }
 
-        public PageViewModel() { Id=new Guid().ToString(); }
+        public PageViewModel() { Id = new Guid().ToString(); }
     }
 }

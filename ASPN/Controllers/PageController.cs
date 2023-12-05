@@ -14,38 +14,38 @@ namespace ASPN.Controllers {
         private readonly UserManager<User> umgr;
 
         public PageController(DataManager dataMgr, UserManager<User> umgr) {
-            this.dataMgr=dataMgr;
-            this.umgr=umgr;
+            this.dataMgr = dataMgr;
+            this.umgr = umgr;
         }
 
         public async Task<IActionResult> Id(Guid id, CancellationToken ct) {
-            var page = dataMgr.Pages.GetPage(id);
+            var page = await dataMgr.Pages.GetPageAsync(id, ct);
 
             PageViewModel model = new PageViewModel {
-                Id=page.Id.ToString(),
-                CodeWord=page.CodeWord,
-                Title=page.Title,
-                Description=page.Description,
-                Text=page.Text,
-                Author=String.IsNullOrEmpty(page.Author) ? umgr.GetUserAsync(User).Result.UserName : page.Author,
-                CreatedAt=page.CreatedAt
+                Id = page.Id.ToString(),
+                CodeWord = page.CodeWord,
+                Title = page.Title,
+                Description = page.Description,
+                Text = page.Text,
+                Author = String.IsNullOrEmpty(page.Author) ? umgr.GetUserAsync(User).Result.UserName : page.Author,
+                CreatedAt = page.CreatedAt
             };
 
-            return await Task.Run(() => View(model), ct);
+            return View(model);
         }
 
         [Authorize]
         public async Task<IActionResult> Edit(Guid id, CancellationToken ct) {
-            var page = id==default ? new Page() : dataMgr.Pages.GetPage(id);
+            var page = id == default ? new Page() : await dataMgr.Pages.GetPageAsync(id, ct);
 
             PageViewModel model = new PageViewModel {
-                Id=page.Id==default ? new Guid().ToString() : page.Id.ToString(),
-                CodeWord=page.CodeWord,
-                Title=page.Title,
-                Description=page.Description,
-                Text=page.Text,
-                Author=String.IsNullOrEmpty(page.Author) ? umgr.GetUserAsync(User).Result.UserName : page.Author,
-                CreatedAt=page.CreatedAt
+                Id = page.Id == default ? new Guid().ToString() : page.Id.ToString(),
+                CodeWord = page.CodeWord,
+                Title = page.Title,
+                Description = page.Description,
+                Text = page.Text,
+                Author = String.IsNullOrEmpty(page.Author) ? umgr.GetUserAsync(User).Result.UserName : page.Author,
+                CreatedAt = page.CreatedAt
             };
 
             return await Task.Run(() => View(model), ct);
@@ -56,13 +56,13 @@ namespace ASPN.Controllers {
         public async Task<IActionResult> Edit(PageViewModel model, CancellationToken ct) {
             if(ModelState.IsValid) {
                 Page page = new Page {
-                    Id=model.Id==default ? new Guid() : Guid.Parse(model.Id),
-                    CodeWord=model.CodeWord,
-                    Title=model.Title,
-                    Description=model.Description,
-                    Text=model.Text,
-                    Author=String.IsNullOrEmpty(model.Author) ? umgr.GetUserAsync(User).Result.UserName : model.Author,
-                    CreatedAt=model.CreatedAt
+                    Id = model.Id == default ? new Guid() : Guid.Parse(model.Id),
+                    CodeWord = model.CodeWord,
+                    Title = model.Title,
+                    Description = model.Description,
+                    Text = model.Text,
+                    Author = String.IsNullOrEmpty(model.Author) ? umgr.GetUserAsync(User).Result.UserName : model.Author,
+                    CreatedAt = model.CreatedAt
                 };
 
                 dataMgr.Pages.SavePage(page);

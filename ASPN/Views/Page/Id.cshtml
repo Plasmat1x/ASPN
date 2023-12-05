@@ -9,7 +9,18 @@
 }
 
 <div>
-    <a asp-area="" asp-controller="Page" asp-action="Edit" asp-route-id="@Model.Id" method="post">Edit</a>
+    <label asp-for="Id"></label>
+    <input asp-for="Id" readonly/>
+
+
+    <a asp-area="" asp-controller="Page" asp-action="Edit" asp-route-id="@Model.Id">
+        <input type="submit" value="Edit" />
+    </a>
+
+    <form asp-area="" asp-controller="Page" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <input type="submit" value="Delete" />
+    </form>
+
     <hr />
     <h1>@Model.Title</h1>
 

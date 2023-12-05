@@ -27,6 +27,8 @@ namespace ASPN.Models
         public string Author { get; set; }
 
         [Display(Name = "Created at")]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
+
+        public PageViewModel() { Id = new Guid().ToString(); }
     }
 }

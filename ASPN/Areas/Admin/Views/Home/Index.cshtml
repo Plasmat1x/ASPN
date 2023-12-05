@@ -47,9 +47,9 @@
     </ul>
     <hr />
     <div>
-        <form asp-area="" asp-controller="Account" asp-action="Edit">
+        <a asp-area="" asp-controller="Account" asp-action="Edit">
             <input type="submit" value="Edit" />
-        </form>
+        </a>
         <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
             <input type="submit" value="Logout" />
         </form>
@@ -60,13 +60,9 @@
             <h2>Admin controll</h2>
         </div>
         <div>
-            <form asp-area="Admin" asp-controller="Users" asp-action="Index">
-                <input type="submit" value="Users" />
-            </form>
+            <a asp-area="Admin" asp-controller="Users" asp-action="Index"><input type="submit" value="Users" /></a>
 
-            <form asp-area="Admin" asp-controller="Roles" asp-action="Index">
-                <input type="submit" value="Roles" />
-            </form>
+            <a asp-area="Admin" asp-controller="Roles" asp-action="Index"><input type="submit" value="Roles" /></a>
         </div>
     </div>
 </div>

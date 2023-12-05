@@ -3,25 +3,34 @@
 @{
     ViewBag.Title = "Edit Page";
 }
-﻿
+
 @model PageViewModel
+
+@{
+    ViewBag.Title = Model.CodeWord;
+}
 
 <div>
     <h1>@Model.Title</h1>
     <p>@Model.Id</p>
+    <p>@Model.CodeWord</p>
+    <p>@Model.Description</p>
+    <p>@Model.Text</p>
+
+
+    <hr />
     <div>
         <form asp-area="" asp-controller="Page" asp-action="Edit" method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="CreatedAt" />
             <input type="hidden" asp-for="Author"/>
 
-            <div asp-validation-summary="All"></div>
+            <div asp-validation-summary="ModelOnly"></div>
             <div>
                 <label asp-for="Title"></label>
-                <input asp-for="Title" />
+                <input asp-for="Title"/>
                 <span asp-validation-for="Title"></span>
             </div>
-
 
             <div>
                 <label asp-for="CodeWord"></label>
@@ -40,6 +49,7 @@
                 <textarea asp-for="Text"></textarea>
                 <span asp-validation-for="Text"></span>
             </div>
+
             <hr />
             <input type="submit" value="Save" />
         </form>

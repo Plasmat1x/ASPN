@@ -10,7 +10,9 @@
 
 <div>
     <div>
-        <a asp-area="Admin" asp-controller="Roles" asp-action="Edit" asp-route-id="@Model.Id" method="post">Edit</a>
+        <form asp-area="Admin" asp-controller="Roles" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+            <input type="submit" value="Edit" />
+        </form>
     </div>
     <hr />
     <h2>@Model.Name</h2>

@@ -8,7 +8,7 @@
     <h2>Signin Account</h2>
     <div>
         <form asp-area="" asp-controller="Account" asp-action="Signin" method="post">
-            <div asp-validation-summary="All"></div>
+            <div asp-validation-summary="ModelOnly"></div>
             <div>
                 <label asp-for="Email"></label>
                 <input asp-for="Email"/>

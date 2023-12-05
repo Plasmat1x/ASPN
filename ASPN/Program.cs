@@ -43,7 +43,6 @@ namespace ASPN
                 options.Cookie.HttpOnly = true;
                 options.LoginPath = "/account/signin";
                 options.AccessDeniedPath = "/account/accessdenied";
-                //options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
             });
 

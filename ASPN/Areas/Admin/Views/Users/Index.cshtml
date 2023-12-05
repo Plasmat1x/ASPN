@@ -11,14 +11,11 @@
 }
 
 <div>
-    <div>
         <ul>
             @foreach (User user in Model)
             {
                 <li>
-                    <div>
-                        <a asp-area="Admin" asp-controller="Users" asp-action="User" asp-route-id="@user.Id">@user.UserName</a>
-                    </div>
+                    <a asp-area="Admin" asp-controller="Users" asp-action="User" asp-route-id="@user.Id">@user.UserName</a>
 
                     <form style="display: inline-block;" id="form-@user.Id" asp-area="Admin" asp-controller="Users" asp-action="Delete" method="post">
                         <input type="hidden" name="id" value="@user.Id">
@@ -27,6 +24,4 @@
                 </li>
             }
         </ul>
-
-    </div>
 </div>

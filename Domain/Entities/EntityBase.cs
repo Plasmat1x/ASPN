@@ -1,4 +1,4 @@
-﻿namespace ASPN.Domain.Entities {
+﻿namespace Domain.Entities {
     public class EntityBase {
         public Guid Id { get; set; }
         public virtual string Title { get; set; }

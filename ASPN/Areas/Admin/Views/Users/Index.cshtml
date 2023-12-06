@@ -11,16 +11,31 @@
 }
 
 <div>
-        <ul>
+        <table>
+            <tr>
+                <td>User Name</td>
+                <td>Email</td>
+                <td></td>
+                <td></td>
+            </tr>
             @foreach (User user in Model)
             {
-                <li>
-                    <a asp-area="Admin" asp-controller="Users" asp-action="User" asp-route-id="@user.Id">@user.UserName</a>
-
-                    <form asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" method="post">
-                        <input type="submit" value="Delete">
-                    </form>
-                </li>
+                <tr> 
+                    <td>
+                        <p>@user.UserName</p>
+                    </td>
+                    <td>
+                        <p>@user.Email</p>
+                    </td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Users" asp-action="User" asp-route-id="@user.Id"><input type="submit" value="Show"/></a>
+                    </td>
+                    <td>
+                        <form asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" method="post">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
             }
-        </ul>
+        </table>
 </div>

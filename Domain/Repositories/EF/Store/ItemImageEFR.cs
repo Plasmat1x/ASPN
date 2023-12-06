@@ -1,6 +1,6 @@
-﻿using ASPN.Domain.Repositories.Abstract.Store;
+﻿using Domain.Repositories.Abstract.Store;
 
-namespace ASPN.Domain.Repositories.EF.Store {
+namespace Domain.Repositories.EF.Store {
     public class ItemImageEFR: IItemImageR {
         private readonly AppDbContext context;
 

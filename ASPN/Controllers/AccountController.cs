@@ -1,6 +1,7 @@
-﻿using ASPN.Domain.Entities.Identity;
-using ASPN.Models;
+﻿using ASPN.Models;
 using ASPN.Services;
+
+using Domain.Entities.Identity;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

@@ -1,4 +1,4 @@
-﻿namespace ASPN.Domain.Entities.Store {
+﻿namespace Domain.Entities.Store {
     public class ItemImage {
         public Guid Id { get; set; }
         public Guid ItemId { get; set; }

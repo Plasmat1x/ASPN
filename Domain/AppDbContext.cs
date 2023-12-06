@@ -1,13 +1,16 @@
-﻿using ASPN.Domain.Entities;
-using ASPN.Domain.Entities.Identity;
+﻿using Domain.Entities;
+using Domain.Entities.Identity;
+using Domain.Entities.Store;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace ASPN.Domain {
+namespace Domain {
     public class AppDbContext: IdentityDbContext<User> {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
+
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
@@ -76,8 +79,19 @@ namespace ASPN.Domain {
 
                 });
             });
+
+            modelBuilder.Entity<Comment>(ent => {
+                ent.HasKey(e => e.Id);
+            });
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            base.OnConfiguring(optionsBuilder);
         }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Page> Pages { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemImage> itemImages { get; set; }
+
     }
 }

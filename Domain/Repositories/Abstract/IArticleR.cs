@@ -1,6 +1,6 @@
-﻿using ASPN.Domain.Entities;
+﻿using Domain.Entities;
 
-namespace ASPN.Domain.Repositories.Abstract {
+namespace Domain.Repositories.Abstract {
     public interface IArticleR {
 
         //Read

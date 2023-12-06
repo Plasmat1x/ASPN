@@ -6,29 +6,45 @@
 
 @{
     ViewBag.Title = Model.CodeWord;
+    IEnumerable<Comment> list = (ViewData["Comments"] as IEnumerable<Comment>);
+    
+    string comment = "";
+    Dictionary<string, string> par = new Dictionary<string, string> {
+        {"pageId", Model.Id},
+        {"comment", comment}};
 }
 
 <div>
     <label asp-for="Id"></label>
     <input asp-for="Id" readonly/>
-
-
     <a asp-area="" asp-controller="Page" asp-action="Edit" asp-route-id="@Model.Id">
         <input type="submit" value="Edit" />
     </a>
-
     <form asp-area="" asp-controller="Page" asp-action="Delete" asp-route-id="@Model.Id" method="post">
         <input type="submit" value="Delete" />
     </form>
-
     <hr />
     <h1>@Model.Title</h1>
-
     @Html.Raw(Model.Text)
-
     <hr />
     <p>@Model.CreatedAt</p>
     <p>Author: @Model.Author</p>
+    <hr/>
+    <div>
+        <form asp-area="" asp-controller="Page" asp-action="LeaveComment" asp-all-route-data="@par" method="post" enctype="multipart/form-data">
+            <textarea asp-for='par["@comment"]'></textarea>
+            <input type="submit" value="Comment" />
+        </form>
+    </div>
+    <hr/>
+    @foreach(var c in list){
+        <div style="border: 1px solid black;">
+            <p>@c.Author</p>
+            @Html.Raw(c.Text)
+
+            <p>@c.CreatedAt</p>
+        </div>
+    }
 </div>
 
 

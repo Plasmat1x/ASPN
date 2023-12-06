@@ -1,7 +1,7 @@
-﻿using ASPN.Domain.Entities.Store;
-using ASPN.Domain.Repositories.Abstract.Store;
+﻿using Domain.Entities.Store;
+using Domain.Repositories.Abstract.Store;
 
-namespace ASPN.Domain.Repositories.EF.Store {
+namespace Domain.Repositories.EF.Store {
     public class ItemEFR: IItemR {
         private readonly AppDbContext context;
 

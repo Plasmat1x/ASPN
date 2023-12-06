@@ -8,14 +8,14 @@
     }
 }
 ﻿
-@model Role
+@model RoleViewModel
 
 <div>
 
 
     @if(ed){
-        <h1>@Model.Name</h1>
-        <p>@Model.Id</p>
+        <h1>Edit Role</h1>
+        
     }
     else
     {
@@ -24,20 +24,34 @@
 
     <div>
         <form asp-area="Admin" asp-controller="Roles" asp-action="Edit" method="post" enctype="multipart/form-data">
-            <input type="hidden" asp-for="Id" />
-            @if (ed)
-            {
-                <input type="hidden" asp-for="Name"/>
-            }
-            <div asp-validation-summary="All"></div>
+
+            <div asp-validation-summary="ModelOnly"></div>
+
+            <div>
+                <label asp-for="Id"></label>
+                <input asp-for="Id" readonly/>
+                <span asp-validation-for="Id"/>
+            </div>
+
+            <div>
+                <label asp-for="Name"></label>
+                     @if (ed)
+                     {
+
+                             <input asp-for="Name" readonly/>
+                     }
+                     else{
+
+                             <input asp-for="Name" />
+
+                     }
+                <span asp-validation-for="Name"></span>
+            </div>
+
 
             @if (!ed)
             {
-                <div>
-                    <label asp-for="Name"></label>
-                    <input asp-for="Name" />
-                    <span asp-validation-for="Name"></span>
-                </div>
+
             }
 
             <div>

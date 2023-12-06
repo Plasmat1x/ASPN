@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace ASPN.Domain.Entities.Identity {
+namespace Domain.Entities.Identity {
     public class User: IdentityUser {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }

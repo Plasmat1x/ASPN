@@ -1,7 +1,8 @@
 ﻿using ASPN.Domain;
-using ASPN.Domain.Entities.Identity;
 using ASPN.Models;
 using ASPN.Services;
+
+using Domain.Entities.Identity;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,25 @@ namespace ASPN.Areas.Admin.Controllers {
         }
 
         public async Task<IActionResult> Index(CancellationToken ct) {
-            var roles = roleMgr.Roles;
-            return View(roles);
+            IEnumerable<RoleViewModel> model = new List<RoleViewModel>();
+
+            foreach(var role in roleMgr.Roles) {
+                model.Append(new RoleViewModel { Id = role.Id, Name = role.Name, Description = role.Description });
+            }
+
+            return View(model);
         }
 
         public async Task<IActionResult> Role(Guid id, CancellationToken ct) {
             var role = await roleMgr.FindByIdAsync(id.ToString());
-            return View(role);
+
+            var model = new RoleViewModel {
+                Id = role.Id,
+                Name = role.Name,
+                Description = role.Description
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -62,7 +75,7 @@ namespace ASPN.Areas.Admin.Controllers {
                 }
                 else {
                     var role = new Role {
-                        Id = new Guid().ToString(),
+                        Id = model.Id,
                         Name = model.Name,
                         Description = model.Description
                     };

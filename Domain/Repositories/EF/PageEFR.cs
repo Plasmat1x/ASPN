@@ -1,9 +1,9 @@
-﻿using ASPN.Domain.Entities;
-using ASPN.Domain.Repositories.Abstract;
+﻿using Domain.Entities;
+using Domain.Repositories.Abstract;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace ASPN.Domain.Repositories.EF {
+namespace Domain.Repositories.EF {
     public class PageEFR: IPageR {
         private readonly AppDbContext context;
         public PageEFR(AppDbContext context) { this.context = context; }

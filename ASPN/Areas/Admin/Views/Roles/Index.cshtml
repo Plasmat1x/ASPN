@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity;
-
-@model IQueryable<Role>
+﻿@model IEnumerable<RoleViewModel>
 
 @{
     ViewBag.Title = "Roles";
@@ -12,16 +10,31 @@
     </div>
     <hr />
     <div>
-        <ul>
+        <table>
+            <tr>
+                <td>Role name</td>
+                <td>Description</td>
+                <td></td>
+                <td></td>
+            </tr>
             @foreach(var role in Model) {
-                <li>
-                    <a asp-area="Admin" asp-controller="Roles" asp-action="Role" asp-route-id="@role.Id">@role.Name</a>
-
-                    <form asp-area="Admin" asp-controller="Roles" asp-action="Delete" asp-route-id="@role.Id" method="post">
-                        <input type="submit" value="Delete">
-                    </form>
-                </li>
+                <tr>
+                    <td>
+                        @role.Name
+                    </td>
+                    <td>
+                        @role.Description
+                    </td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Roles" asp-action="Role" asp-route-id="@role.Id"><input type="submit" value="Edit"/></a>
+                    </td>
+                    <td>
+                        <form asp-area="Admin" asp-controller="Roles" asp-action="Delete" asp-route-id="@role.Id" method="post">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
+                </tr>
             }
-        </ul>
+        </table>
     </div>
 </div>

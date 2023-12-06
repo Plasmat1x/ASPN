@@ -1,8 +1,9 @@
 ﻿using ASPN.Domain;
-using ASPN.Domain.Entities;
-using ASPN.Domain.Entities.Identity;
 using ASPN.Models;
 using ASPN.Services;
+
+using Domain.Entities;
+using Domain.Entities.Identity;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,8 +19,14 @@ namespace ASPN.Controllers {
             this.umgr = umgr;
         }
 
+
+
         public async Task<IActionResult> Id(Guid id, CancellationToken ct) {
             var page = await dataMgr.Pages.GetPageAsync(id, ct);
+
+            IEnumerable<Comment> comments = await dataMgr.Comments.GetCommentsAsync(page.Id);
+
+            ViewData["Comments"] = comments;
 
             PageViewModel model = new PageViewModel {
                 Id = page.Id.ToString(),
@@ -28,7 +35,7 @@ namespace ASPN.Controllers {
                 Description = page.Description,
                 Text = page.Text,
                 Author = String.IsNullOrEmpty(page.Author) ? umgr.GetUserAsync(User).Result.UserName : page.Author,
-                CreatedAt = page.CreatedAt
+                CreatedAt = page.CreatedAt,
             };
 
             return View(model);
@@ -78,11 +85,28 @@ namespace ASPN.Controllers {
         [Authorize]
         public async Task<IActionResult> Delete(Guid id, CancellationToken ct) {
             if(ModelState.IsValid) {
-                dataMgr.Pages.DeletePageAsync(id);
+                await dataMgr.Pages.DeletePageAsync(id);
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).CutController());
             }
 
             return NotFound();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> LeaveComment(Guid pageId, string comment, CancellationToken ct) {
+
+            var data = new Comment {
+                Id = new Guid(),
+                Text = comment,
+                Author = umgr.GetUserAsync(User).Result.UserName,
+                CreatedAt = DateTime.UtcNow,
+                PageId = pageId
+            };
+
+            await dataMgr.Comments.CreateCommentAsync(data, ct);
+
+            return RedirectToAction(nameof(PageController.Id), nameof(PageController).CutController(), new { id = pageId });
         }
     }
 }

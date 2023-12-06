@@ -1,8 +1,12 @@
 using ASPN.Domain;
-using ASPN.Domain.Entities.Identity;
-using ASPN.Domain.Repositories.Abstract;
-using ASPN.Domain.Repositories.EF;
 using ASPN.Services;
+
+using Domain;
+using Domain.Entities.Identity;
+using Domain.Repositories.Abstract;
+using Domain.Repositories.Abstract.Store;
+using Domain.Repositories.EF;
+using Domain.Repositories.EF.Store;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +23,12 @@ namespace ASPN {
 
             builder.Services.AddTransient<IArticleR, ArticleEFR>();
             builder.Services.AddTransient<IPageR, PageEFR>();
+            builder.Services.AddTransient<ICommentR, CommentEFR>();
+            builder.Services.AddTransient<IItemR, ItemEFR>();
+            builder.Services.AddTransient<IItemImageR, ItemImageEFR>();
             builder.Services.AddTransient<DataManager>();
 
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ASPN")));
 
             builder.Services.AddIdentity<User, Role>(options => {
                 options.User.RequireUniqueEmail = true;

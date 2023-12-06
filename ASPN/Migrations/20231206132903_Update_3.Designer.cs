@@ -12,20 +12,20 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPN.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231129082957_Init")]
-    partial class Init
+    [Migration("20231206132903_Update_3")]
+    partial class Update_3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.14")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ASPN.Domain.Entities.Article", b =>
+            modelBuilder.Entity("Domain.Entities.Article", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,32 @@ namespace ASPN.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("ASPN.Domain.Entities.Identity.User", b =>
+            modelBuilder.Entity("Domain.Entities.Comment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Identity.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -142,14 +167,14 @@ namespace ASPN.Migrations
                         {
                             Id = "b97ed420-63cd-43cd-814f-2bee8c0f46d4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5db4bce8-297b-4b0c-ae35-08a17eced625",
-                            CreatedAt = new DateTime(2023, 11, 29, 8, 29, 56, 595, DateTimeKind.Utc).AddTicks(5943),
+                            ConcurrencyStamp = "c7078d03-0501-407b-8653-a11a4ce0b7e5",
+                            CreatedAt = new DateTime(2023, 12, 6, 13, 29, 0, 320, DateTimeKind.Utc).AddTicks(1576),
                             Email = "plasmat1xdev@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "PLASMAT1XDEV@GMAIL.COM",
                             NormalizedUserName = "PLASMAT1X",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG6kH0zWEOngdsgK5LAu9z8+tUho660DeojppWweweQq/DeoBiIVpVAJoWHwUAM64A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFh+5+WNwWu3RF9JRJ4wmCb5iZoWFwbu37CyEhLkTXXL9dsYhTRRg7VByd+8vjUG8w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -159,19 +184,103 @@ namespace ASPN.Migrations
                         {
                             Id = "5fe1d4fc-d6ea-43c7-a1f4-73d2f83032bd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a60d1ad8-bc87-4252-9bc6-4017e703a9f5",
-                            CreatedAt = new DateTime(2023, 11, 29, 8, 29, 56, 752, DateTimeKind.Utc).AddTicks(8417),
+                            ConcurrencyStamp = "505beaac-f6f0-4cb4-8361-e0bcbd9a441b",
+                            CreatedAt = new DateTime(2023, 12, 6, 13, 29, 0, 410, DateTimeKind.Utc).AddTicks(4774),
                             Email = "Mike@ma.il",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MIKE@MA.IL",
                             NormalizedUserName = "MIKELELE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEG7W7WWGTlY4RcK0fQh8OPx6woL7h9FAyNy7nJZbhnqX5gb+txC6W0aRz/3CHncHhg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGN6AB7WyvhoYq6kwef38GsYILRZnwTjA0408+HoqWtqMXS+QMzosSdadBqXrNactQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
                             UserName = "Mikelele"
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Page", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CodeWord")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("520661c1-0236-42e9-8d5d-c8d74700624c"),
+                            CodeWord = "TestPageFromDB",
+                            CreatedAt = new DateTime(2023, 12, 6, 13, 29, 0, 506, DateTimeKind.Utc).AddTicks(5733),
+                            Description = "Test page from db",
+                            Text = "<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias eligendi ex voluptatum rem illo sint nisi harum consequatur, magnam itaque fugit nam deserunt nulla nobis veniam blanditiis beatae exercitationem, minus perspiciatis consectetur temporibus repellendus. Odio, mollitia, vel, accusantium officiis minus vero nobis est nisi repudiandae exercitationem ipsa distinctio dolorum. Iure!</p>\r\n\r\n<p>@Model.CreatedAt</p>",
+                            Title = "Hellow page from DB"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Store.Item", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Store.ItemImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("itemImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -185,7 +294,8 @@ namespace ASPN.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -327,7 +437,7 @@ namespace ASPN.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ASPN.Domain.Entities.Identity.Role", b =>
+            modelBuilder.Entity("Domain.Entities.Identity.Role", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
 
@@ -362,7 +472,7 @@ namespace ASPN.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ASPN.Domain.Entities.Identity.User", null)
+                    b.HasOne("Domain.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -371,7 +481,7 @@ namespace ASPN.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ASPN.Domain.Entities.Identity.User", null)
+                    b.HasOne("Domain.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -386,7 +496,7 @@ namespace ASPN.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ASPN.Domain.Entities.Identity.User", null)
+                    b.HasOne("Domain.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -395,7 +505,7 @@ namespace ASPN.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ASPN.Domain.Entities.Identity.User", null)
+                    b.HasOne("Domain.Entities.Identity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

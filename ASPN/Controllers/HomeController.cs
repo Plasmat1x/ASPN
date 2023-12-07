@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace ASPN.Controllers {
-    public class HomeController:Controller {
+    public class HomeController: Controller {
         private readonly ILogger<HomeController> _logger;
         private readonly DataManager dataManager;
         public HomeController(ILogger<HomeController> logger, DataManager dataManager) {
@@ -17,6 +17,7 @@ namespace ASPN.Controllers {
         public async Task<IActionResult> Index(CancellationToken ct) {
 
             var model = await dataManager.Pages.GetPagesAsync(ct);
+            model = model.OrderByDescending(x => x.CreatedAt);
             return View(model);
         }
 

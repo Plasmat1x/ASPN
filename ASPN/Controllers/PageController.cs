@@ -9,6 +9,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+/*
+ Plans:
+-Create claims for user-role (Moderator => admin,moder...)
+-Make restriction by claims/role
+-Create claims controll panel
+-Make store functionality for practice
+-Make comments moderation (Delete, edit)
+
+ */
+
 namespace ASPN.Controllers {
     public class PageController: Controller {
         private readonly DataManager dataMgr;
@@ -19,12 +29,13 @@ namespace ASPN.Controllers {
             this.umgr = umgr;
         }
 
-
-
         public async Task<IActionResult> Id(Guid id, CancellationToken ct) {
             var page = await dataMgr.Pages.GetPageAsync(id, ct);
-
             IEnumerable<Comment> comments = await dataMgr.Comments.GetCommentsAsync(page.Id);
+
+            if(comments == null) {
+                comments = new List<Comment>();
+            }
 
             ViewData["Comments"] = comments;
 

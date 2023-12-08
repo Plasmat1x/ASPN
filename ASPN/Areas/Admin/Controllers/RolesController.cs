@@ -21,11 +21,7 @@ namespace ASPN.Areas.Admin.Controllers {
         }
 
         public async Task<IActionResult> Index(CancellationToken ct) {
-            IEnumerable<RoleViewModel> model = new List<RoleViewModel>();
-
-            foreach(var role in roleMgr.Roles) {
-                model.Append(new RoleViewModel { Id = role.Id, Name = role.Name, Description = role.Description });
-            }
+            IEnumerable<Role> model = roleMgr.Roles.ToList();
 
             return View(model);
         }
@@ -57,7 +53,15 @@ namespace ASPN.Areas.Admin.Controllers {
 
         public async Task<IActionResult> Edit(Guid id, CancellationToken ct) {
             var role = id == default ? new Role() : await roleMgr.FindByIdAsync(id.ToString());
-            return View(role);
+            var model = new RoleViewModel();
+
+            if(role != null) {
+                model.Id = role.Id;
+                model.Name = role.Name;
+                model.Description = role.Description;
+            }
+
+            return View(model);
         }
 
         [HttpPost]

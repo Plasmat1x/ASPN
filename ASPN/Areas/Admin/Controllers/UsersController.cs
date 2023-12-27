@@ -18,6 +18,8 @@ namespace ASPN.Areas.Admin.Controllers {
             this.dataMgr = dataMgr;
             this.userMgr = userMgr;
             this.roleMgr = roleMgr;
+
+
         }
 
         public async Task<IActionResult> Index(CancellationToken ct) {
